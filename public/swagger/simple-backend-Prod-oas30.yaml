@@ -1,0 +1,211 @@
+openapi: "3.0.1"
+info:
+  title: "InstantBackend"
+  version: "1.0"
+servers:
+- url: "https://api.instantbackend.dev"
+paths:
+  /login:
+    post:
+      summary: User login
+      description: Authenticates a user with username and password
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - username
+                - password
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Authentication successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: JWT or session token
+        '401':
+          description: Invalid username or password
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Invalid credentials
+  /signup:
+    post:
+      summary: Sign up a user for an account
+      description: Signup a user onto your account
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - username
+                - password
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Signup successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: JWT or session token
+        '401':
+          description: Invalid username or password
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Invalid credentials
+  /{collection}:
+    get:
+      summary: Retrieve items from a collection
+      description: Returns filtered and paginated items from a given collection
+      parameters:
+        - name: "collection"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+        - name: "nextToken"
+          in: "query"
+          required: false
+          schema:
+            type: "string"
+          description: Token for pagination
+        - name: "sort"
+          in: "query"
+          required: false
+          schema:
+            type: "string"
+            enum: [asc, desc]
+          description: Sort order
+        - name: "limit"
+          in: "query"
+          required: false
+          schema:
+            type: integer
+            minimum: 5
+            maximum: 100
+          description: Maximum number of results to return
+        - name: anyField
+          in: query
+          required: false
+          schema:
+            type: object
+            additionalProperties: true
+          style: form
+          explode: true
+          description: "Any arbitrary query parameters"
+      responses:
+        '200':
+          description: List of items
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      type: object
+                  nextToken:
+                    type: string
+      security:
+        - LambdaTokenAuthorizer: [ ]
+    post:
+      summary: Create or update an item
+      description: Adds or replaces an item in the specified collection
+      parameters:
+        - name: "collection"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: Optional unique identifier of the item
+                item:
+                  type: object
+                  additionalProperties: true
+      responses:
+        '200':
+          description: Item created or updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: The ID of the stored item
+      security:
+        - LambdaTokenAuthorizer: []
+  /{collection}/{id}:
+    get:
+      summary: Retrieve a specific item
+      description: Fetches a single item by ID from the specified collection
+      parameters:
+        - name: "collection"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        '200':
+          description: Item retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+      security:
+        - LambdaTokenAuthorizer: []
+components:
+  securitySchemes:
+    LambdaTokenAuthorizer:
+      type: "apiKey"
+      description: ""
+      name: "Authorization"
+      in: "header"
+      x-amazon-apigateway-authtype: "custom"
+
+
