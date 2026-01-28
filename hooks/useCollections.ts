@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getCollections } from "@/lib/backendFlowClient";
+import { getCollections } from "@/lib/InstantBackendClient";
 import { useBackendFlow } from "@/contexts/backend-flow-context";
 
 export function useCollections() {

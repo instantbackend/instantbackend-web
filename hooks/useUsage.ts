@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getUsage } from "@/lib/backendFlowClient";
+import { getUsage } from "@/lib/InstantBackendClient";
 import { useBackendFlow } from "@/contexts/backend-flow-context";
 
 export function useUsage() {

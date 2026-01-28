@@ -3,8 +3,8 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
-import { InstantBackend } from "@/lib/backendFlowSDK";
-import { instantiateWithToken } from "@/lib/backendFlowClient";
+import { InstantBackend } from "@/lib/InstantBackendSDK";
+import { instantiateWithToken } from "@/lib/InstantBackendClient";
 import { AUTH_COOKIE_NAME } from "@/lib/auth";
 import { extractApiKeyFromToken, parseJwt } from "@/lib/jwt";
 

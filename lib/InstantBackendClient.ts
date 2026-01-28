@@ -1,4 +1,4 @@
-import { InstantBackend } from "@/lib/backendFlowSDK";
+import { InstantBackend } from "@/lib/InstantBackendSDK";
 import { extractApiKeyFromToken } from "@/lib/jwt";
 
 const API_KEY = process.env.NEXT_PUBLIC_BACKENDFLOW_API_KEY || "";
