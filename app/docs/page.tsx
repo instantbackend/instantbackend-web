@@ -46,6 +46,52 @@ const openTasks = await sdk
   .get();`}
             </pre>
           </div>
+          <div className="space-y-2 md:col-span-2">
+            <p className="text-sm font-semibold text-slate-800">Register + login + invoices</p>
+            <pre className="rounded-lg bg-slate-900 p-4 text-sm text-slate-100 overflow-auto">
+{`const sdk = new InstantBackend("YOUR_API_KEY");
+
+await sdk.registerUserForAccount(
+  "jane.doe",
+  "secure-password",
+  "jane.doe@company.com",
+  "Jane Doe"
+);
+
+await sdk.login("jane.doe", "secure-password");
+
+await sdk.collection("invoices").add({
+  number: "INV-2026-001",
+  status: "paid",
+  total: 1290,
+});
+
+const paidInvoices = await sdk
+  .collection("invoices")
+  .where("status", "==", "paid")
+  .limit(10)
+  .get();`}
+            </pre>
+          </div>
+          <div className="space-y-2">
+            <p className="text-sm font-semibold text-slate-800">Pagination + sorting</p>
+            <pre className="rounded-lg bg-slate-900 p-4 text-sm text-slate-100 overflow-auto">
+{`const sdk = new InstantBackend("YOUR_API_KEY");
+
+const recentInvoices = await sdk
+  .collection("invoices")
+  .sort("desc")
+  .limit(5)
+  .get();
+
+const nextPage = await sdk
+  .collection("invoices")
+  .sort("desc")
+  .limit(5)
+  .nextToken(recentInvoices.nextToken)
+  .get();`}
+            </pre>
+          </div>
         </CardContent>
       </Card>
 
