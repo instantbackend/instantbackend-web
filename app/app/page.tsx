@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,6 +21,9 @@ export default function DashboardPage() {
   useRequireAuth();
   const { bf, logout, apiKey: apiKeyFromToken, subscriptionStatus } = useBackendFlow();
   const router = useRouter();
+  const [loadingPortal, setLoadingPortal] = useState(false);
+  const [loadingPlan, setLoadingPlan] = useState<"Basic" | "Professional" | null>(null);
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
 
   const fallbackApiKey = process.env.NEXT_PUBLIC_BACKENDFLOW_API_KEY || "API_KEY_NO_CONFIGURADA";
   const apiKey = apiKeyFromToken || fallbackApiKey;
@@ -150,6 +153,56 @@ export default function DashboardPage() {
     router.push("/login");
   };
 
+  const handleOpenCustomerPortal = async () => {
+    if (!bf) return;
+    setLoadingPortal(true);
+    try {
+      const returnUrl = window.location.origin + window.location.pathname;
+      const data = await bf.createBillingPortalSession({ returnUrl });
+      if (data?.url) {
+        window.location.href = data.url as string;
+      }
+    } catch (error) {
+      console.error("Error opening customer portal:", error);
+    } finally {
+      setLoadingPortal(false);
+    }
+  };
+
+  const startCheckout = async (planName: "Basic" | "Professional") => {
+    if (!bf) return;
+    setCheckoutError(null);
+    setLoadingPlan(planName);
+    try {
+      const priceId = prices[planName];
+      if (!priceId) {
+        setCheckoutError("Plan pricing is not configured.");
+        return;
+      }
+      const successUrl =
+        process.env.NEXT_PUBLIC_STRIPE_SUCCESS_URL ||
+        `${window.location.origin}/checkout/success`;
+      const cancelUrl =
+        process.env.NEXT_PUBLIC_STRIPE_CANCEL_URL ||
+        `${window.location.origin}/checkout/cancel`;
+      const data = await bf.createCheckoutSession({
+        priceId,
+        successUrl,
+        cancelUrl,
+      });
+      if (data?.url) {
+        window.location.href = data.url as string;
+      } else {
+        throw new Error("Checkout URL not returned.");
+      }
+    } catch (error: any) {
+      console.error("Error starting checkout:", error);
+      setCheckoutError(error?.message ?? "Could not start checkout.");
+    } finally {
+      setLoadingPlan(null);
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col gap-2">
@@ -204,7 +257,29 @@ export default function DashboardPage() {
             {subscriptionStatus ? (
               <>
                 {subscriptionStatus.hasSubscription === false && (
-                  <p className="text-sm text-slate-700">No active subscription.</p>
+                  <div className="space-y-3">
+                    <p className="text-sm text-slate-700">No active subscription.</p>
+                    {checkoutError && (
+                      <p className="text-sm text-red-600">{checkoutError}</p>
+                    )}
+                    <div className="flex flex-wrap gap-2">
+                      <Button
+                        variant="outline"
+                        onClick={() => startCheckout("Basic")}
+                        disabled={loadingPlan !== null}
+                      >
+                        {loadingPlan === "Basic" ? "Redirecting..." : "Upgrade to Basic"}
+                      </Button>
+                      <Button
+                        onClick={() => startCheckout("Professional")}
+                        disabled={loadingPlan !== null}
+                      >
+                        {loadingPlan === "Professional"
+                          ? "Redirecting..."
+                          : "Upgrade to Professional"}
+                      </Button>
+                    </div>
+                  </div>
                 )}
                 {subscriptionStatus.hasSubscription !== false && (() => {
                   const sub = (subscriptionStatus as any)?.subscription || subscriptionStatus;
@@ -221,21 +296,31 @@ export default function DashboardPage() {
                         : null;
 
                   return (
-                    <div className="flex flex-wrap gap-2 text-sm text-slate-800">
-                      <span className="rounded-full bg-slate-100 px-3 py-1 font-semibold text-slate-800">
-                        Status: {status}
-                      </span>
-                      {currentPlan && (
-                        <span className="rounded-full bg-green-100 px-3 py-1 font-semibold text-green-700">
-                          Current plan: {currentPlan}
+                    <>
+                      <div className="flex flex-wrap gap-2 text-sm text-slate-800">
+                        <span className="rounded-full bg-slate-100 px-3 py-1 font-semibold text-slate-800">
+                          Status: {status}
                         </span>
-                      )}
-                      {renewDate && (
-                        <span className="rounded-full bg-slate-100 px-3 py-1 font-semibold text-slate-700">
-                          Renews: {renewDate}
-                        </span>
-                      )}
-                    </div>
+                        {currentPlan && (
+                          <span className="rounded-full bg-green-100 px-3 py-1 font-semibold text-green-700">
+                            Current plan: {currentPlan}
+                          </span>
+                        )}
+                        {renewDate && (
+                          <span className="rounded-full bg-slate-100 px-3 py-1 font-semibold text-slate-700">
+                            Renews: {renewDate}
+                          </span>
+                        )}
+                      </div>
+                      <Button
+                        variant="outline"
+                        className="mt-2"
+                        onClick={handleOpenCustomerPortal}
+                        disabled={loadingPortal}
+                      >
+                        {loadingPortal ? "Opening customer portal..." : "Manage billing"}
+                      </Button>
+                    </>
                   );
                 })()}
               </>

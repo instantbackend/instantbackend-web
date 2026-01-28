@@ -7,7 +7,14 @@ import "prismjs/components/prism-kotlin";
 import "prismjs/components/prism-swift";
 import "prismjs/components/prism-csharp";
 
-type CodeLanguage = "javascript" | "typescript" | "bash" | "json" | "kotlin" | "swift" | "csharp";
+export type CodeLanguage =
+  | "javascript"
+  | "typescript"
+  | "bash"
+  | "json"
+  | "kotlin"
+  | "swift"
+  | "csharp";
 
 interface CodeBlockProps {
   code: string;

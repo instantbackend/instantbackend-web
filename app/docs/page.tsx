@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CodeBlock } from "@/components/code-block";
+import { ApiKeyCodeBlock } from "@/components/api-key-code-block";
 
 export default function DocsPage() {
   return (
@@ -58,7 +59,7 @@ export default function DocsPage() {
           <CardContent className="grid gap-4">
             <div id="sdk-node" className="scroll-mt-24 space-y-2">
               <p className="text-sm font-semibold text-slate-800">Node / JS</p>
-              <CodeBlock
+              <ApiKeyCodeBlock
                 className="shadow-inner"
                 code={`import { InstantBackend } from "instantbackend-sdk";
 
@@ -70,7 +71,7 @@ const tasks = await sdk
             </div>
             <div className="space-y-2">
               <p className="text-sm font-semibold text-slate-800">Login + query</p>
-              <CodeBlock
+              <ApiKeyCodeBlock
                 className="shadow-inner"
                 code={`const sdk = new InstantBackend("YOUR_API_KEY");
 await sdk.login("user", "pass");
@@ -89,7 +90,7 @@ const openTasks = await sdk
             </div>
             <div className="space-y-2">
               <p className="text-sm font-semibold text-slate-800">Register + login + invoices</p>
-              <CodeBlock
+              <ApiKeyCodeBlock
                 className="shadow-inner"
                 code={`const sdk = new InstantBackend("YOUR_API_KEY");
 
@@ -117,7 +118,7 @@ const paidInvoices = await sdk
             </div>
             <div className="space-y-2">
               <p className="text-sm font-semibold text-slate-800">Pagination + sorting</p>
-              <CodeBlock
+              <ApiKeyCodeBlock
                 className="shadow-inner"
                 code={`const sdk = new InstantBackend("YOUR_API_KEY");
 
@@ -137,7 +138,7 @@ const nextPage = await sdk
             </div>
             <div id="sdk-android" className="scroll-mt-24 space-y-2">
               <p className="text-sm font-semibold text-slate-800">Android (Kotlin)</p>
-              <CodeBlock
+              <ApiKeyCodeBlock
                 className="shadow-inner"
                 language="kotlin"
                 code={`val client = OkHttpClient()
@@ -195,7 +196,7 @@ val invoicesResponse = client
             </div>
             <div id="sdk-ios" className="scroll-mt-24 space-y-2">
               <p className="text-sm font-semibold text-slate-800">iOS (Swift)</p>
-              <CodeBlock
+              <ApiKeyCodeBlock
                 className="shadow-inner"
                 language="swift"
                 code={`import Foundation
@@ -274,7 +275,7 @@ _ = try await URLSession.shared.data(for: listReq)`}
             </div>
             <div id="sdk-unity" className="scroll-mt-24 space-y-2">
               <p className="text-sm font-semibold text-slate-800">Unity (C#)</p>
-              <CodeBlock
+              <ApiKeyCodeBlock
                 className="shadow-inner"
                 language="csharp"
                 code={`using System.Text;
