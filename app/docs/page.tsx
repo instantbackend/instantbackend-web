@@ -25,7 +25,7 @@ export default function DocsPage() {
 {`import { InstantBackend } from "instantbackend-sdk";
 
 const sdk = new InstantBackend("YOUR_API_KEY");
-const users = await sdk.collection("users").get();`}
+const tasks = await sdk.collection("tasks").get();`}
             </pre>
           </div>
           <div className="space-y-2">
@@ -33,9 +33,16 @@ const users = await sdk.collection("users").get();`}
             <pre className="rounded-lg bg-slate-900 p-4 text-sm text-slate-100 overflow-auto">
 {`const sdk = new InstantBackend("YOUR_API_KEY");
 await sdk.login("user", "pass");
-const admins = await sdk
-  .collection("users")
-  .where("role", "==", "admin")
+
+await sdk.collection("tasks").add({
+  title: "Send proposal",
+  status: "open",
+  priority: "high",
+});
+
+const openTasks = await sdk
+  .collection("tasks")
+  .where("status", "==", "open")
   .get();`}
             </pre>
           </div>

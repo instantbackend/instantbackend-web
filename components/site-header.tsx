@@ -1,6 +1,7 @@
  "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useRef, useEffect, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import { useBackendFlow } from "@/contexts/backend-flow-context";
@@ -91,7 +92,15 @@ export function SiteHeader({ className }: SiteHeaderProps) {
       )}
     >
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
-        <Link href="/" className="font-bold">
+        <Link href="/" className="flex items-center gap-2 font-bold">
+          <Image
+            src="/img/logo.png"
+            alt="InstantBackend"
+            width={120}
+            height={28}
+            className="h-7 w-auto"
+            priority
+          />
           <span className="bg-gradient-to-br from-brand-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
             InstantBackend
           </span>

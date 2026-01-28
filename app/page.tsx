@@ -165,9 +165,15 @@ const sdk = new InstantBackend("YOUR_API_KEY");
 
 await sdk.login("user", "password");
 
-const admins = await sdk
-  .collection("users")
-  .where("role", "==", "admin")
+await sdk.collection("tasks").add({
+  title: "Send proposal",
+  status: "open",
+  priority: "high",
+});
+
+const openTasks = await sdk
+  .collection("tasks")
+  .where("status", "==", "open")
   .limit(10)
   .get();`}
               </pre>

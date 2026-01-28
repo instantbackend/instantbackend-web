@@ -19,6 +19,7 @@ function RegisterForm() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [email, setEmail] = useState("");
   const [fullName, setFullName] = useState("");
+  const [termsAccepted, setTermsAccepted] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -129,6 +130,24 @@ function RegisterForm() {
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
               />
+            </div>
+
+            <div className="flex items-start gap-3 rounded-md border border-slate-200 bg-slate-50 px-3 py-2">
+              <input
+                id="termsAccepted"
+                type="checkbox"
+                className="mt-1 h-4 w-4 rounded border-slate-300 text-brand-600 focus:ring-brand-600"
+                checked={termsAccepted}
+                onChange={(e) => setTermsAccepted(e.target.checked)}
+                required
+              />
+              <Label htmlFor="termsAccepted" className="text-sm text-slate-700 leading-6">
+                I agree to the{" "}
+                <a href="/terms" className="text-brand-600 underline">
+                  Terms and Conditions
+                </a>
+                .
+              </Label>
             </div>
 
             {error && (
