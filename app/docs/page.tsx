@@ -18,9 +18,26 @@ export default function DocsPage() {
               SDK examples
             </a>
             <div className="flex flex-col gap-1 pl-3 text-xs text-slate-500">
-              <a href="#sdk-node" className="hover:text-slate-700">
+              <a href="#sdk-node-basic" className="hover:text-slate-700">
                 Node / JS
               </a>
+              <div className="flex flex-col gap-1 pl-3">
+                <a href="#sdk-node-basic" className="hover:text-slate-700">
+                  Basic read
+                </a>
+                <a href="#sdk-node-login" className="hover:text-slate-700">
+                  Login + query
+                </a>
+                <a href="#sdk-node-register" className="hover:text-slate-700">
+                  Register + invoices
+                </a>
+                <a href="#sdk-node-pagination" className="hover:text-slate-700">
+                  Pagination + sorting
+                </a>
+                <a href="#sdk-node-custom-sort" className="hover:text-slate-700">
+                  Custom sort field
+                </a>
+              </div>
               <a href="#sdk-android" className="hover:text-slate-700">
                 Android
               </a>
@@ -50,6 +67,17 @@ export default function DocsPage() {
             InstantBackend is a simple BaaS: authenticate, create collections, and query data
             with a lightweight SDK. Here are quick examples and the embedded swagger.
           </p>
+          <p className="text-sm text-slate-600">
+            Find more examples on GitHub:{" "}
+            <a
+              href="https://github.com/instantbackend/instantbackend-examples"
+              className="text-brand-600 underline"
+              target="_blank"
+              rel="noreferrer"
+            >
+              instantbackend/instantbackend-examples
+            </a>
+          </p>
         </section>
 
         <Card id="sdk-examples" className="scroll-mt-24">
@@ -57,7 +85,7 @@ export default function DocsPage() {
             <CardTitle>Quick SDK examples</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-4">
-            <div id="sdk-node" className="scroll-mt-24 space-y-2">
+            <div id="sdk-node-basic" className="scroll-mt-24 space-y-2">
               <p className="text-sm font-semibold text-slate-800">Node / JS</p>
               <ApiKeyCodeBlock
                 className="shadow-inner"
@@ -70,7 +98,7 @@ const tasks = await sdk
   .get();`}
               />
             </div>
-            <div className="space-y-2">
+            <div id="sdk-node-login" className="scroll-mt-24 space-y-2">
               <p className="text-sm font-semibold text-slate-800">Login + query</p>
               <ApiKeyCodeBlock
                 className="shadow-inner"
@@ -89,7 +117,7 @@ const openTasks = await sdk
   .get();`}
               />
             </div>
-            <div className="space-y-2">
+            <div id="sdk-node-register" className="scroll-mt-24 space-y-2">
               <p className="text-sm font-semibold text-slate-800">Register + login + invoices</p>
               <ApiKeyCodeBlock
                 className="shadow-inner"
@@ -117,7 +145,7 @@ const paidInvoices = await sdk
   .get();`}
               />
             </div>
-            <div className="space-y-2">
+            <div id="sdk-node-pagination" className="scroll-mt-24 space-y-2">
               <p className="text-sm font-semibold text-slate-800">Pagination + sorting</p>
               <ApiKeyCodeBlock
                 className="shadow-inner"
@@ -138,7 +166,7 @@ const nextPage = await sdk
   .get();`}
               />
             </div>
-            <div className="space-y-2">
+            <div id="sdk-node-custom-sort" className="scroll-mt-24 space-y-2">
               <p className="text-sm font-semibold text-slate-800">Custom sort field</p>
               <ApiKeyCodeBlock
                 className="shadow-inner"

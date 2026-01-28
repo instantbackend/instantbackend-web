@@ -6,8 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="5e7b98fb-fbeb-4c1e-b89f-2b69c88edb72" name="Changes" comment="First commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/app/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/docs/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/docs/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/code-block.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/code-block.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/api-key-code-block.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/api-key-code-block.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/deploy-prd.sh" beforeDir="false" afterPath="$PROJECT_DIR$/deploy-prd.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/middleware.ts" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +88,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1769522695328</updated>
-      <workItem from="1769522696381" duration="9118000" />
+      <workItem from="1769522696381" duration="10934000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <option name="closed" value="true" />

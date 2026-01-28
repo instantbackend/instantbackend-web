@@ -209,7 +209,7 @@ export default function DashboardPage() {
       <div className="flex flex-col gap-2">
         <h1 className="text-3xl font-bold text-slate-900">Dashboard</h1>
         <p className="text-slate-600">
-          Use the SDK to manage your collections and track usage.
+          View your API key, collections, and usage in one place.
         </p>
       </div>
 

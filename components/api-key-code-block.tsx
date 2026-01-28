@@ -25,7 +25,7 @@ export function ApiKeyCodeBlock({
       ].join("\n");
       return `${notice}${code}`;
     }
-    return code.replaceAll("YOUR_API_KEY", apiKey);
+    return code.split("YOUR_API_KEY").join(apiKey);
   }, [apiKey, code, isAuthenticated]);
 
   return <CodeBlock code={resolvedCode} language={language} className={className} />;
