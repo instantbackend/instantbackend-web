@@ -7,13 +7,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { registerUser, login } from "@/lib/InstantBackendClient";
-import { useBackendFlow } from "@/contexts/backend-flow-context";
+import { useInstantBackend } from "@/contexts/instant-backend-context";
 
 function RegisterForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { setAuth } = useBackendFlow();
-  const { isAuthenticated } = useBackendFlow();
+  const { setAuth } = useInstantBackend();
+  const { isAuthenticated } = useInstantBackend();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");

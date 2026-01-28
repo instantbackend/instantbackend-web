@@ -1,7 +1,7 @@
 import { InstantBackend } from "@/lib/InstantBackendSDK";
 import { extractApiKeyFromToken } from "@/lib/jwt";
 
-const API_KEY = process.env.NEXT_PUBLIC_BACKENDFLOW_API_KEY || "";
+const API_KEY = process.env.NEXT_PUBLIC_INSTANTBACKEND_API_KEY || "";
 
 const isAuthError = (error: unknown) => {
   const status = (error as any)?.status;
@@ -94,7 +94,7 @@ export async function getUsage(client: InstantBackend): Promise<UsageInfo> {
     const startOfMonthUtc = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1, 0, 0, 0));
     const normalizedBase =
       (client as any)?.baseUrl?.replace(/\/$/, "") ||
-      (process.env.NEXT_PUBLIC_BACKENDFLOW_BASE_URL || "https://api.instantbackend.dev").replace(
+      (process.env.NEXT_PUBLIC_INSTANTBACKEND_BASE_URL || "https://api.instantbackend.dev").replace(
         /\/$/,
         ""
       );
@@ -131,7 +131,7 @@ export async function getUsage(client: InstantBackend): Promise<UsageInfo> {
 
     const envLimit =
       toNumberOrNull(process.env.NEXT_PUBLIC_PLAN_LIMIT_PERSONAL) ??
-      toNumberOrNull(process.env.NEXT_PUBLIC_BACKENDFLOW_REQUESTS_LIMIT) ??
+      toNumberOrNull(process.env.NEXT_PUBLIC_INSTANTBACKEND_REQUESTS_LIMIT) ??
       null;
 
     const pickFirstNumber = (...values: unknown[]) => {
@@ -179,7 +179,7 @@ export async function getUsage(client: InstantBackend): Promise<UsageInfo> {
   }
   const envLimit =
     Number(process.env.NEXT_PUBLIC_PLAN_LIMIT_PERSONAL) ||
-    Number(process.env.NEXT_PUBLIC_BACKENDFLOW_REQUESTS_LIMIT) ||
+    Number(process.env.NEXT_PUBLIC_INSTANTBACKEND_REQUESTS_LIMIT) ||
     1000;
   return {
     used: 120,

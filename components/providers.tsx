@@ -3,11 +3,11 @@
 import { QueryClient, QueryClientProvider, QueryCache, MutationCache } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { useRouter } from "next/navigation";
-import { BackendFlowProvider, useBackendFlow } from "@/contexts/backend-flow-context";
+import { InstantBackendProvider, useInstantBackend } from "@/contexts/instant-backend-context";
 
 function QueryClientWithAuth({ children }: { children: React.ReactNode }) {
   const router = useRouter();
-  const { logout } = useBackendFlow();
+  const { logout } = useInstantBackend();
 
   const queryClient = useMemo(() => {
     const handleError = (error: any) => {
@@ -37,9 +37,9 @@ function QueryClientWithAuth({ children }: { children: React.ReactNode }) {
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <BackendFlowProvider>
+    <InstantBackendProvider>
       <QueryClientWithAuth>{children}</QueryClientWithAuth>
-    </BackendFlowProvider>
+    </InstantBackendProvider>
   );
 }
 

@@ -13,19 +13,20 @@ import {
 import { Progress } from "@/components/ui/progress";
 import { useCollections } from "@/hooks/useCollections";
 import { useUsage } from "@/hooks/useUsage";
-import { useBackendFlow } from "@/contexts/backend-flow-context";
+import { useInstantBackend } from "@/contexts/instant-backend-context";
 import { useRequireAuth } from "@/hooks/useRequireAuth";
 import { useQuery } from "@tanstack/react-query";
 
 export default function DashboardPage() {
   useRequireAuth();
-  const { bf, logout, apiKey: apiKeyFromToken, subscriptionStatus } = useBackendFlow();
+  const { bf, logout, apiKey: apiKeyFromToken, subscriptionStatus } = useInstantBackend();
   const router = useRouter();
   const [loadingPortal, setLoadingPortal] = useState(false);
   const [loadingPlan, setLoadingPlan] = useState<"Basic" | "Professional" | null>(null);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
 
-  const fallbackApiKey = process.env.NEXT_PUBLIC_BACKENDFLOW_API_KEY || "API_KEY_NO_CONFIGURADA";
+  const fallbackApiKey =
+    process.env.NEXT_PUBLIC_INSTANTBACKEND_API_KEY || "API_KEY_NOT_CONFIGURED";
   const apiKey = apiKeyFromToken || fallbackApiKey;
 
   const formatPrice = (value: number | string | null | undefined): string => {
@@ -356,9 +357,6 @@ export default function DashboardPage() {
                       >
                         <div>
                           <p className="font-semibold text-slate-900">{c.name}</p>
-                          <p className="text-xs text-slate-500">
-                            {c.count ? `${c.count} items` : "Explore with bf.collection().get()"}
-                          </p>
                         </div>
                         <span className="rounded-full bg-slate-100 px-3 py-1 text-xs text-slate-700">
                           collection

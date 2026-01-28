@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { getCollections } from "@/lib/InstantBackendClient";
-import { useBackendFlow } from "@/contexts/backend-flow-context";
+import { useInstantBackend } from "@/contexts/instant-backend-context";
 
 export function useCollections() {
-  const { bf, isAuthenticated } = useBackendFlow();
+  const { bf, isAuthenticated } = useInstantBackend();
 
   return useQuery({
     queryKey: ["collections"],

@@ -7,18 +7,18 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { login } from "@/lib/InstantBackendClient";
-import { useBackendFlow } from "@/contexts/backend-flow-context";
+import { useInstantBackend } from "@/contexts/instant-backend-context";
 
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { setAuth } = useBackendFlow();
+  const { setAuth } = useInstantBackend();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const { isAuthenticated } = useBackendFlow();
+  const { isAuthenticated } = useInstantBackend();
 
   useEffect(() => {
     if (isAuthenticated) {

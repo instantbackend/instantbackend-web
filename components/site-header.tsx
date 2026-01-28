@@ -4,14 +4,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useRef, useEffect, useMemo } from "react";
 import { cn } from "@/lib/utils";
-import { useBackendFlow } from "@/contexts/backend-flow-context";
+import { useInstantBackend } from "@/contexts/instant-backend-context";
 
 interface SiteHeaderProps {
   className?: string;
 }
 
 export function SiteHeader({ className }: SiteHeaderProps) {
-  const { isAuthenticated, username, logout, subscriptionStatus, bf } = useBackendFlow();
+  const { isAuthenticated, username, logout, subscriptionStatus, bf } = useInstantBackend();
   const [open, setOpen] = useState(false);
   const [loadingPortal, setLoadingPortal] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null);

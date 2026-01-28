@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useBackendFlow } from "@/contexts/backend-flow-context";
+import { useInstantBackend } from "@/contexts/instant-backend-context";
 
 export default function Home() {
   const router = useRouter();
-  const { isAuthenticated, jwtToken, bf, subscriptionStatus, logout } = useBackendFlow();
+  const { isAuthenticated, jwtToken, bf, subscriptionStatus, logout } = useInstantBackend();
   const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
   const [showAuthModal, setShowAuthModal] = useState(false);

@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { getUsage } from "@/lib/InstantBackendClient";
-import { useBackendFlow } from "@/contexts/backend-flow-context";
+import { useInstantBackend } from "@/contexts/instant-backend-context";
 
 export function useUsage() {
-  const { bf, isAuthenticated, jwtToken } = useBackendFlow();
+  const { bf, isAuthenticated, jwtToken } = useInstantBackend();
   const now = new Date();
   const monthKey = `${now.getUTCFullYear()}-${now.getUTCMonth() + 1}`;
 

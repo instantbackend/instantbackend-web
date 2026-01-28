@@ -64,6 +64,7 @@ export default function DocsPage() {
                 code={`import { InstantBackend } from "instantbackend-sdk";
 
 const sdk = new InstantBackend("YOUR_API_KEY");
+await sdk.login("user", "pass");
 const tasks = await sdk
   .collection("tasks")
   .get();`}
@@ -121,6 +122,7 @@ const paidInvoices = await sdk
               <ApiKeyCodeBlock
                 className="shadow-inner"
                 code={`const sdk = new InstantBackend("YOUR_API_KEY");
+await sdk.login("user", "pass");
 
 const recentInvoices = await sdk
   .collection("invoices")
@@ -133,6 +135,26 @@ const nextPage = await sdk
   .sort("desc")
   .limit(5)
   .nextToken(recentInvoices.nextToken)
+  .get();`}
+              />
+            </div>
+            <div className="space-y-2">
+              <p className="text-sm font-semibold text-slate-800">Custom sort field</p>
+              <ApiKeyCodeBlock
+                className="shadow-inner"
+                code={`const sdk = new InstantBackend("YOUR_API_KEY");
+await sdk.login("user", "pass");
+
+await sdk.collection("ranking").add({
+  username: "jane.doe",
+  score: 1280,
+  __sortBy: "score",
+});
+
+const topScores = await sdk
+  .collection("ranking")
+  .sort("desc")
+  .limit(10)
   .get();`}
               />
             </div>

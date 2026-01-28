@@ -2,12 +2,12 @@
 
 import { useEffect, useMemo, useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { useBackendFlow } from "@/contexts/backend-flow-context";
+import { useInstantBackend } from "@/contexts/instant-backend-context";
 
 function CheckoutStartContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const { isAuthenticated, jwtToken, bf } = useBackendFlow();
+  const { isAuthenticated, jwtToken, bf } = useInstantBackend();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 

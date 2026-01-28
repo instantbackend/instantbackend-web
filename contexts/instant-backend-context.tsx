@@ -8,7 +8,7 @@ import { instantiateWithToken } from "@/lib/InstantBackendClient";
 import { AUTH_COOKIE_NAME } from "@/lib/auth";
 import { extractApiKeyFromToken, parseJwt } from "@/lib/jwt";
 
-type BackendFlowContextValue = {
+type InstantBackendContextValue = {
   bf: InstantBackend | null;
   jwtToken: string | null;
   isAuthenticated: boolean;
@@ -20,11 +20,11 @@ type BackendFlowContextValue = {
   logout: () => void;
 };
 
-const BackendFlowContext = createContext<BackendFlowContextValue | undefined>(
+const InstantBackendContext = createContext<InstantBackendContextValue | undefined>(
   undefined
 );
 
-export function BackendFlowProvider({ children }: { children: React.ReactNode }) {
+export function InstantBackendProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const [jwtToken, setJwtToken] = useState<string | null>(null);
   const [bf, setBf] = useState<InstantBackend | null>(null);
@@ -74,7 +74,7 @@ export function BackendFlowProvider({ children }: { children: React.ReactNode })
       if (handleAuthError(error)) {
         return null;
       }
-      console.warn("No se pudo obtener el estado de la suscripción", error);
+      console.warn("Failed to fetch subscription status", error);
       setSubscriptionStatus(null);
       return null;
     }
@@ -124,16 +124,16 @@ export function BackendFlowProvider({ children }: { children: React.ReactNode })
   );
 
   return (
-    <BackendFlowContext.Provider value={value}>
+    <InstantBackendContext.Provider value={value}>
       {children}
-    </BackendFlowContext.Provider>
+    </InstantBackendContext.Provider>
   );
 }
 
-export function useBackendFlow() {
-  const ctx = useContext(BackendFlowContext);
+export function useInstantBackend() {
+  const ctx = useContext(InstantBackendContext);
   if (!ctx) {
-    throw new Error("useBackendFlow must be used within BackendFlowProvider");
+    throw new Error("useInstantBackend must be used within InstantBackendProvider");
   }
   return ctx;
 }

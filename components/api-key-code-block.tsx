@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import { useBackendFlow } from "@/contexts/backend-flow-context";
+import { useInstantBackend } from "@/contexts/instant-backend-context";
 import { CodeBlock, type CodeLanguage } from "@/components/code-block";
 
 interface ApiKeyCodeBlockProps {
@@ -15,7 +15,7 @@ export function ApiKeyCodeBlock({
   language,
   className,
 }: ApiKeyCodeBlockProps) {
-  const { apiKey, isAuthenticated } = useBackendFlow();
+  const { apiKey, isAuthenticated } = useInstantBackend();
   const resolvedCode = useMemo(() => {
     if (!isAuthenticated || !apiKey) {
       const notice = [
