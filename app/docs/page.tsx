@@ -16,6 +16,20 @@ export default function DocsPage() {
             <a href="#sdk-examples" className="hover:text-slate-900">
               SDK examples
             </a>
+            <div className="flex flex-col gap-1 pl-3 text-xs text-slate-500">
+              <a href="#sdk-node" className="hover:text-slate-700">
+                Node / JS
+              </a>
+              <a href="#sdk-android" className="hover:text-slate-700">
+                Android
+              </a>
+              <a href="#sdk-ios" className="hover:text-slate-700">
+                iOS
+              </a>
+              <a href="#sdk-unity" className="hover:text-slate-700">
+                Unity
+              </a>
+            </div>
             <a href="#swagger" className="hover:text-slate-900">
               Swagger
             </a>
@@ -23,7 +37,7 @@ export default function DocsPage() {
         </div>
       </aside>
       <div className="min-w-0 flex-1 space-y-8">
-        <section id="overview" className="space-y-3">
+        <section id="overview" className="scroll-mt-24 space-y-3">
           <p className="text-sm uppercase tracking-wide text-brand-600 font-semibold">
             InstantBackend
           </p>
@@ -34,12 +48,12 @@ export default function DocsPage() {
           </p>
         </section>
 
-        <Card id="sdk-examples">
+        <Card id="sdk-examples" className="scroll-mt-24">
           <CardHeader>
             <CardTitle>Quick SDK examples</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-4">
-            <div className="space-y-2">
+            <div id="sdk-node" className="scroll-mt-24 space-y-2">
               <p className="text-sm font-semibold text-slate-800">Node / JS</p>
               <CodeBlock
                 className="shadow-inner"
@@ -116,10 +130,144 @@ const nextPage = await sdk
   .get();`}
               />
             </div>
+            <div id="sdk-android" className="scroll-mt-24 space-y-2">
+              <p className="text-sm font-semibold text-slate-800">Android (Kotlin)</p>
+              <CodeBlock
+                className="shadow-inner"
+                language="kotlin"
+                code={`val client = OkHttpClient()
+
+val loginPayload = """
+  {"username":"jane.doe","password":"secure-password"}
+""".trimIndent()
+
+val loginRequest = Request.Builder()
+  .url("https://api.instantbackend.dev/login")
+  .post(loginPayload.toRequestBody("application/json".toMediaType()))
+  .addHeader("X-API-Key", "YOUR_API_KEY")
+  .build()
+
+val loginResponse = client.newCall(loginRequest).execute()
+val token = JSONObject(loginResponse.body!!.string()).getString("token")
+
+val invoicePayload = """
+  {"number":"INV-2026-001","status":"paid","total":1290}
+""".trimIndent()
+
+val createInvoiceRequest = Request.Builder()
+  .url("https://api.instantbackend.dev/invoices")
+  .post(invoicePayload.toRequestBody("application/json".toMediaType()))
+  .addHeader("Authorization", "Bearer $token")
+  .build()
+
+client.newCall(createInvoiceRequest).execute()
+
+val listInvoicesRequest = Request.Builder()
+  .url("https://api.instantbackend.dev/invoices?status=paid&limit=10")
+  .get()
+  .addHeader("Authorization", "Bearer $token")
+  .build()
+
+val invoicesResponse = client.newCall(listInvoicesRequest).execute()`}
+              />
+            </div>
+            <div id="sdk-ios" className="scroll-mt-24 space-y-2">
+              <p className="text-sm font-semibold text-slate-800">iOS (Swift)</p>
+              <CodeBlock
+                className="shadow-inner"
+                language="swift"
+                code={`import Foundation
+
+let apiKey = "YOUR_API_KEY"
+let baseUrl = "https://api.instantbackend.dev"
+
+func request(_ path: String, method: String, body: Data? = nil, token: String? = nil) -> URLRequest {
+  var req = URLRequest(url: URL(string: baseUrl + path)!)
+  req.httpMethod = method
+  req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+  if let token = token {
+    req.setValue("Bearer \\(token)", forHTTPHeaderField: "Authorization")
+  } else {
+    req.setValue(apiKey, forHTTPHeaderField: "X-API-Key")
+  }
+  req.httpBody = body
+  return req
+}
+
+let loginBody = try JSONSerialization.data(withJSONObject: [
+  "username": "jane.doe",
+  "password": "secure-password"
+])
+
+let loginReq = request("/login", method: "POST", body: loginBody)
+let loginData = try await URLSession.shared.data(for: loginReq).0
+let token = try JSONSerialization.jsonObject(with: loginData) as? [String: Any]
+let jwt = token?["token"] as? String ?? ""
+
+let invoiceBody = try JSONSerialization.data(withJSONObject: [
+  "number": "INV-2026-001",
+  "status": "paid",
+  "total": 1290
+])
+
+let createReq = request("/invoices", method: "POST", body: invoiceBody, token: jwt)
+_ = try await URLSession.shared.data(for: createReq)
+
+let listReq = request("/invoices?status=paid&limit=10", method: "GET", token: jwt)
+_ = try await URLSession.shared.data(for: listReq)`}
+              />
+            </div>
+            <div id="sdk-unity" className="scroll-mt-24 space-y-2">
+              <p className="text-sm font-semibold text-slate-800">Unity (C#)</p>
+              <CodeBlock
+                className="shadow-inner"
+                language="csharp"
+                code={`using System.Text;
+using UnityEngine;
+using UnityEngine.Networking;
+
+public class InstantBackendExample : MonoBehaviour
+{
+  private const string ApiKey = "YOUR_API_KEY";
+  private const string BaseUrl = "https://api.instantbackend.dev";
+
+  private IEnumerator Start()
+  {
+    var loginBody = "{\"username\":\"jane.doe\",\"password\":\"secure-password\"}";
+    var loginReq = new UnityWebRequest(BaseUrl + "/login", "POST");
+    loginReq.uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(loginBody));
+    loginReq.downloadHandler = new DownloadHandlerBuffer();
+    loginReq.SetRequestHeader("Content-Type", "application/json");
+    loginReq.SetRequestHeader("X-API-Key", ApiKey);
+    yield return loginReq.SendWebRequest();
+
+    var token = JsonUtility.FromJson<TokenResponse>(loginReq.downloadHandler.text).token;
+
+    var saveBody = "{\"userId\":\"jane.doe\",\"level\":5,\"coins\":1200,\"updatedAt\":\"2026-01-28T12:00:00Z\"}";
+    var createReq = new UnityWebRequest(BaseUrl + "/saves", "POST");
+    createReq.uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(saveBody));
+    createReq.downloadHandler = new DownloadHandlerBuffer();
+    createReq.SetRequestHeader("Content-Type", "application/json");
+    createReq.SetRequestHeader("Authorization", "Bearer " + token);
+    yield return createReq.SendWebRequest();
+
+    var listReq = UnityWebRequest.Get(BaseUrl + "/saves?userId=jane.doe&limit=1");
+    listReq.SetRequestHeader("Authorization", "Bearer " + token);
+    yield return listReq.SendWebRequest();
+  }
+
+  [System.Serializable]
+  private class TokenResponse
+  {
+    public string token;
+  }
+}`}
+              />
+            </div>
           </CardContent>
         </Card>
 
-        <section id="swagger" className="space-y-4">
+        <section id="swagger" className="scroll-mt-24 space-y-4">
           <div>
             <h2 className="text-2xl font-semibold text-slate-900">Swagger</h2>
             <p className="text-slate-600">
