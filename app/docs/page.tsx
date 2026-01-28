@@ -1,4 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CodeBlock } from "@/components/code-block";
 
 export default function DocsPage() {
   return (
@@ -40,17 +41,19 @@ export default function DocsPage() {
           <CardContent className="grid gap-4">
             <div className="space-y-2">
               <p className="text-sm font-semibold text-slate-800">Node / JS</p>
-              <pre className="rounded-lg bg-slate-900 p-4 text-sm text-slate-100 overflow-auto">
-{`import { InstantBackend } from "instantbackend-sdk";
+              <CodeBlock
+                className="shadow-inner"
+                code={`import { InstantBackend } from "instantbackend-sdk";
 
 const sdk = new InstantBackend("YOUR_API_KEY");
 const tasks = await sdk.collection("tasks").get();`}
-              </pre>
+              />
             </div>
             <div className="space-y-2">
               <p className="text-sm font-semibold text-slate-800">Login + query</p>
-              <pre className="rounded-lg bg-slate-900 p-4 text-sm text-slate-100 overflow-auto">
-{`const sdk = new InstantBackend("YOUR_API_KEY");
+              <CodeBlock
+                className="shadow-inner"
+                code={`const sdk = new InstantBackend("YOUR_API_KEY");
 await sdk.login("user", "pass");
 
 await sdk.collection("tasks").add({
@@ -63,12 +66,13 @@ const openTasks = await sdk
   .collection("tasks")
   .where("status", "==", "open")
   .get();`}
-              </pre>
+              />
             </div>
             <div className="space-y-2">
               <p className="text-sm font-semibold text-slate-800">Register + login + invoices</p>
-              <pre className="rounded-lg bg-slate-900 p-4 text-sm text-slate-100 overflow-auto">
-{`const sdk = new InstantBackend("YOUR_API_KEY");
+              <CodeBlock
+                className="shadow-inner"
+                code={`const sdk = new InstantBackend("YOUR_API_KEY");
 
 await sdk.registerUserForAccount(
   "jane.doe",
@@ -90,12 +94,13 @@ const paidInvoices = await sdk
   .where("status", "==", "paid")
   .limit(10)
   .get();`}
-              </pre>
+              />
             </div>
             <div className="space-y-2">
               <p className="text-sm font-semibold text-slate-800">Pagination + sorting</p>
-              <pre className="rounded-lg bg-slate-900 p-4 text-sm text-slate-100 overflow-auto">
-{`const sdk = new InstantBackend("YOUR_API_KEY");
+              <CodeBlock
+                className="shadow-inner"
+                code={`const sdk = new InstantBackend("YOUR_API_KEY");
 
 const recentInvoices = await sdk
   .collection("invoices")
@@ -109,7 +114,7 @@ const nextPage = await sdk
   .limit(5)
   .nextToken(recentInvoices.nextToken)
   .get();`}
-              </pre>
+              />
             </div>
           </CardContent>
         </Card>
