@@ -30,6 +30,9 @@ export default function DocsPage() {
                 Unity
               </a>
             </div>
+            <a href="#ai-prompts" className="hover:text-slate-900">
+              AI prompts
+            </a>
             <a href="#swagger" className="hover:text-slate-900">
               Swagger
             </a>
@@ -60,7 +63,9 @@ export default function DocsPage() {
                 code={`import { InstantBackend } from "instantbackend-sdk";
 
 const sdk = new InstantBackend("YOUR_API_KEY");
-const tasks = await sdk.collection("tasks").get();`}
+const tasks = await sdk
+  .collection("tasks")
+  .get();`}
               />
             </div>
             <div className="space-y-2">
@@ -143,12 +148,19 @@ val loginPayload = """
 
 val loginRequest = Request.Builder()
   .url("https://api.instantbackend.dev/login")
-  .post(loginPayload.toRequestBody("application/json".toMediaType()))
+  .post(
+    loginPayload
+      .toRequestBody("application/json".toMediaType())
+  )
   .addHeader("X-API-Key", "YOUR_API_KEY")
   .build()
 
-val loginResponse = client.newCall(loginRequest).execute()
-val token = JSONObject(loginResponse.body!!.string()).getString("token")
+val loginResponse = client
+  .newCall(loginRequest)
+  .execute()
+val token = JSONObject(
+  loginResponse.body!!.string()
+).getString("token")
 
 val invoicePayload = """
   {"number":"INV-2026-001","status":"paid","total":1290}
@@ -156,19 +168,29 @@ val invoicePayload = """
 
 val createInvoiceRequest = Request.Builder()
   .url("https://api.instantbackend.dev/invoices")
-  .post(invoicePayload.toRequestBody("application/json".toMediaType()))
+  .post(
+    invoicePayload
+      .toRequestBody("application/json".toMediaType())
+  )
   .addHeader("Authorization", "Bearer $token")
   .build()
 
-client.newCall(createInvoiceRequest).execute()
+client
+  .newCall(createInvoiceRequest)
+  .execute()
 
 val listInvoicesRequest = Request.Builder()
-  .url("https://api.instantbackend.dev/invoices?status=paid&limit=10")
+  .url(
+    "https://api.instantbackend.dev/invoices" +
+      "?status=paid&limit=10"
+  )
   .get()
   .addHeader("Authorization", "Bearer $token")
   .build()
 
-val invoicesResponse = client.newCall(listInvoicesRequest).execute()`}
+val invoicesResponse = client
+  .newCall(listInvoicesRequest)
+  .execute()`}
               />
             </div>
             <div id="sdk-ios" className="scroll-mt-24 space-y-2">
@@ -181,12 +203,25 @@ val invoicesResponse = client.newCall(listInvoicesRequest).execute()`}
 let apiKey = "YOUR_API_KEY"
 let baseUrl = "https://api.instantbackend.dev"
 
-func request(_ path: String, method: String, body: Data? = nil, token: String? = nil) -> URLRequest {
-  var req = URLRequest(url: URL(string: baseUrl + path)!)
+func request(
+  _ path: String,
+  method: String,
+  body: Data? = nil,
+  token: String? = nil
+) -> URLRequest {
+  var req = URLRequest(
+    url: URL(string: baseUrl + path)!
+  )
   req.httpMethod = method
-  req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+  req.setValue(
+    "application/json",
+    forHTTPHeaderField: "Content-Type"
+  )
   if let token = token {
-    req.setValue("Bearer \\(token)", forHTTPHeaderField: "Authorization")
+    req.setValue(
+      "Bearer \\(token)",
+      forHTTPHeaderField: "Authorization"
+    )
   } else {
     req.setValue(apiKey, forHTTPHeaderField: "X-API-Key")
   }
@@ -194,26 +229,46 @@ func request(_ path: String, method: String, body: Data? = nil, token: String? =
   return req
 }
 
-let loginBody = try JSONSerialization.data(withJSONObject: [
-  "username": "jane.doe",
-  "password": "secure-password"
-])
+let loginBody = try JSONSerialization.data(
+  withJSONObject: [
+    "username": "jane.doe",
+    "password": "secure-password"
+  ]
+)
 
-let loginReq = request("/login", method: "POST", body: loginBody)
-let loginData = try await URLSession.shared.data(for: loginReq).0
-let token = try JSONSerialization.jsonObject(with: loginData) as? [String: Any]
+let loginReq = request(
+  "/login",
+  method: "POST",
+  body: loginBody
+)
+let loginData = try await URLSession.shared
+  .data(for: loginReq).0
+let token = try JSONSerialization.jsonObject(
+  with: loginData
+) as? [String: Any]
 let jwt = token?["token"] as? String ?? ""
 
-let invoiceBody = try JSONSerialization.data(withJSONObject: [
-  "number": "INV-2026-001",
-  "status": "paid",
-  "total": 1290
-])
+let invoiceBody = try JSONSerialization.data(
+  withJSONObject: [
+    "number": "INV-2026-001",
+    "status": "paid",
+    "total": 1290
+  ]
+)
 
-let createReq = request("/invoices", method: "POST", body: invoiceBody, token: jwt)
+let createReq = request(
+  "/invoices",
+  method: "POST",
+  body: invoiceBody,
+  token: jwt
+)
 _ = try await URLSession.shared.data(for: createReq)
 
-let listReq = request("/invoices?status=paid&limit=10", method: "GET", token: jwt)
+let listReq = request(
+  "/invoices?status=paid&limit=10",
+  method: "GET",
+  token: jwt
+)
 _ = try await URLSession.shared.data(for: listReq)`}
               />
             </div>
@@ -229,30 +284,60 @@ using UnityEngine.Networking;
 public class InstantBackendExample : MonoBehaviour
 {
   private const string ApiKey = "YOUR_API_KEY";
-  private const string BaseUrl = "https://api.instantbackend.dev";
+  private const string BaseUrl =
+    "https://api.instantbackend.dev";
 
   private IEnumerator Start()
   {
-    var loginBody = "{\"username\":\"jane.doe\",\"password\":\"secure-password\"}";
-    var loginReq = new UnityWebRequest(BaseUrl + "/login", "POST");
-    loginReq.uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(loginBody));
+    var loginBody =
+      "{\"username\":\"jane.doe\",\"password\":\"secure-password\"}";
+    var loginReq = new UnityWebRequest(
+      BaseUrl + "/login",
+      "POST"
+    );
+    loginReq.uploadHandler = new UploadHandlerRaw(
+      Encoding.UTF8.GetBytes(loginBody)
+    );
     loginReq.downloadHandler = new DownloadHandlerBuffer();
-    loginReq.SetRequestHeader("Content-Type", "application/json");
+    loginReq.SetRequestHeader(
+      "Content-Type",
+      "application/json"
+    );
     loginReq.SetRequestHeader("X-API-Key", ApiKey);
     yield return loginReq.SendWebRequest();
 
-    var token = JsonUtility.FromJson<TokenResponse>(loginReq.downloadHandler.text).token;
+    var token = JsonUtility.FromJson<TokenResponse>(
+      loginReq.downloadHandler.text
+    ).token;
 
-    var saveBody = "{\"userId\":\"jane.doe\",\"level\":5,\"coins\":1200,\"updatedAt\":\"2026-01-28T12:00:00Z\"}";
-    var createReq = new UnityWebRequest(BaseUrl + "/saves", "POST");
-    createReq.uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(saveBody));
+    var saveBody =
+      "{\"userId\":\"jane.doe\",\"level\":5," +
+      "\"coins\":1200,\"updatedAt\":\"2026-01-28T12:00:00Z\"}";
+    var createReq = new UnityWebRequest(
+      BaseUrl + "/saves",
+      "POST"
+    );
+    createReq.uploadHandler = new UploadHandlerRaw(
+      Encoding.UTF8.GetBytes(saveBody)
+    );
     createReq.downloadHandler = new DownloadHandlerBuffer();
-    createReq.SetRequestHeader("Content-Type", "application/json");
-    createReq.SetRequestHeader("Authorization", "Bearer " + token);
+    createReq.SetRequestHeader(
+      "Content-Type",
+      "application/json"
+    );
+    createReq.SetRequestHeader(
+      "Authorization",
+      "Bearer " + token
+    );
     yield return createReq.SendWebRequest();
 
-    var listReq = UnityWebRequest.Get(BaseUrl + "/saves?userId=jane.doe&limit=1");
-    listReq.SetRequestHeader("Authorization", "Bearer " + token);
+    var listReq = UnityWebRequest.Get(
+      BaseUrl + "/saves?userId=jane.doe&limit=1"
+    );
+    listReq.SetRequestHeader(
+      "Authorization",
+      "Bearer " + token
+    );
     yield return listReq.SendWebRequest();
   }
 
@@ -267,6 +352,41 @@ public class InstantBackendExample : MonoBehaviour
           </CardContent>
         </Card>
 
+
+
+        <section id="ai-prompts" className="scroll-mt-24 space-y-4">
+          <div>
+            <h2 className="text-2xl font-semibold text-slate-900">AI prompts</h2>
+            <p className="text-slate-600">
+              Use these prompts to generate apps that integrate InstantBackend quickly.
+            </p>
+          </div>
+          <div className="space-y-2">
+            <p className="text-sm font-semibold text-slate-800">App generator prompt</p>
+            <CodeBlock
+              className="shadow-inner"
+              code={`You are a senior full-stack engineer. Build a small web app
+that uses the InstantBackend SDK.
+Note the SDK is available at:
+- https://www.npmjs.com/package/instantbackend-sdk
+Docs:
+- https://www.instantbackend.dev/docs
+
+Requirements:
+- Use instantbackend-sdk for auth and data access.
+- Implement login, create, and list flows.
+- Use a collection named "tasks".
+- After login, create a task and then fetch tasks filtered by status.
+- Include clear UI states (loading, error, empty, success).
+- Keep the code minimal and production-ready.
+
+Provide:
+- Folder structure
+- Key files with code
+- How to run locally`}
+            />
+          </div>
+        </section>
         <section id="swagger" className="scroll-mt-24 space-y-4">
           <div>
             <h2 className="text-2xl font-semibold text-slate-900">Swagger</h2>
