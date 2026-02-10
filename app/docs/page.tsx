@@ -85,7 +85,7 @@ export default function DocsPage() {
             <CardTitle>Quick SDK examples</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-4">
-            <div id="sdk-node-basic" className="scroll-mt-24 space-y-2">
+            <div id="sdk-node-basic" className="min-w-0 scroll-mt-24 space-y-2">
               <p className="text-sm font-semibold text-slate-800">Node / JS</p>
               <ApiKeyCodeBlock
                 className="shadow-inner"
@@ -98,7 +98,7 @@ const tasks = await sdk
   .get();`}
               />
             </div>
-            <div id="sdk-node-login" className="scroll-mt-24 space-y-2">
+            <div id="sdk-node-login" className="min-w-0 scroll-mt-24 space-y-2">
               <p className="text-sm font-semibold text-slate-800">Login + query</p>
               <ApiKeyCodeBlock
                 className="shadow-inner"
@@ -117,7 +117,7 @@ const openTasks = await sdk
   .get();`}
               />
             </div>
-            <div id="sdk-node-register" className="scroll-mt-24 space-y-2">
+            <div id="sdk-node-register" className="min-w-0 scroll-mt-24 space-y-2">
               <p className="text-sm font-semibold text-slate-800">Register + login + invoices</p>
               <ApiKeyCodeBlock
                 className="shadow-inner"
@@ -145,7 +145,7 @@ const paidInvoices = await sdk
   .get();`}
               />
             </div>
-            <div id="sdk-node-pagination" className="scroll-mt-24 space-y-2">
+            <div id="sdk-node-pagination" className="min-w-0 scroll-mt-24 space-y-2">
               <p className="text-sm font-semibold text-slate-800">Pagination + sorting</p>
               <ApiKeyCodeBlock
                 className="shadow-inner"
@@ -166,7 +166,7 @@ const nextPage = await sdk
   .get();`}
               />
             </div>
-            <div id="sdk-node-custom-sort" className="scroll-mt-24 space-y-2">
+            <div id="sdk-node-custom-sort" className="min-w-0 scroll-mt-24 space-y-2">
               <p className="text-sm font-semibold text-slate-800">Custom sort field</p>
               <ApiKeyCodeBlock
                 className="shadow-inner"
@@ -186,7 +186,7 @@ const topScores = await sdk
   .get();`}
               />
             </div>
-            <div id="sdk-android" className="scroll-mt-24 space-y-2">
+            <div id="sdk-android" className="min-w-0 scroll-mt-24 space-y-2">
               <p className="text-sm font-semibold text-slate-800">Android (Kotlin)</p>
               <ApiKeyCodeBlock
                 className="shadow-inner"
@@ -244,7 +244,7 @@ val invoicesResponse = client
   .execute()`}
               />
             </div>
-            <div id="sdk-ios" className="scroll-mt-24 space-y-2">
+            <div id="sdk-ios" className="min-w-0 scroll-mt-24 space-y-2">
               <p className="text-sm font-semibold text-slate-800">iOS (Swift)</p>
               <ApiKeyCodeBlock
                 className="shadow-inner"
@@ -323,7 +323,7 @@ let listReq = request(
 _ = try await URLSession.shared.data(for: listReq)`}
               />
             </div>
-            <div id="sdk-unity" className="scroll-mt-24 space-y-2">
+            <div id="sdk-unity" className="min-w-0 scroll-mt-24 space-y-2">
               <p className="text-sm font-semibold text-slate-800">Unity (C#)</p>
               <ApiKeyCodeBlock
                 className="shadow-inner"
