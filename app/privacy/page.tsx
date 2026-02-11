@@ -1,3 +1,10 @@
+import { type Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy",
+  description: "Privacy Policy for InstantBackend. Learn how we collect, use, and protect your information.",
+};
+
 export default function PrivacyPage() {
   return (
     <div className="space-y-10">

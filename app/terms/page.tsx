@@ -1,3 +1,10 @@
+import { type Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Terms and Conditions",
+  description: "Terms and Conditions for using InstantBackend service.",
+};
+
 export default function TermsPage() {
   return (
     <div className="space-y-10">

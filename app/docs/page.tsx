@@ -2,6 +2,17 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CodeBlock } from "@/components/code-block";
 import { ApiKeyCodeBlock } from "@/components/api-key-code-block";
 
+import { type Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Documentation - InstantBackend",
+  description: "Comprehensive documentation for InstantBackend SDK. Learn how to authenticate users, manage collections, and integrate backend features into your app.",
+  openGraph: {
+    title: "Documentation - InstantBackend",
+    description: "Learn how to use InstantBackend to ship your app in minutes.",
+  },
+};
+
 export default function DocsPage() {
   return (
     <div className="mx-auto flex max-w-6xl gap-8">

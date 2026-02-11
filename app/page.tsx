@@ -119,6 +119,38 @@ export default function Home() {
 
   return (
     <div className="space-y-16">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "WebSite",
+                "name": "InstantBackend",
+                "url": "https://instantbackend.dev",
+                "potentialAction": {
+                  "@type": "SearchAction",
+                  "target": "https://instantbackend.dev/docs?q={search_term_string}",
+                  "query-input": "required name=search_term_string",
+                },
+              },
+              {
+                "@type": "SoftwareApplication",
+                "name": "InstantBackend",
+                "applicationCategory": "DeveloperApplication",
+                "operatingSystem": "Any",
+                "offers": {
+                  "@type": "Offer",
+                  "price": "0",
+                  "priceCurrency": "EUR",
+                },
+                "description": "Backend as a Service for frontend developers. Authenticate users, manage collections, and track usage with a lightweight SDK.",
+              },
+            ],
+          }),
+        }}
+      />
       {/* Hero */}
       <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-600 via-indigo-600 to-purple-600 px-6 py-16 text-white shadow-card">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.15),transparent_35%),radial-gradient(circle_at_80%_0%,rgba(255,255,255,0.08),transparent_35%)]" />
@@ -159,7 +191,7 @@ export default function Home() {
                 <span className="h-3 w-3 rounded-full bg-green-400" />
               </div>
               <pre className="overflow-auto whitespace-pre-wrap break-words rounded-xl bg-slate-900/70 p-4 text-sm leading-relaxed text-slate-50 shadow-inner">
-{`import { InstantBackend } from "instantbackend-sdk";
+                {`import { InstantBackend } from "instantbackend-sdk";
 
 const sdk = new InstantBackend("YOUR_API_KEY");
 
@@ -271,9 +303,8 @@ const openTasks = await sdk
           ].map((plan, idx) => (
             <div
               key={plan.name}
-              className={`flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-card ${
-                idx === 1 ? "ring-2 ring-brand-600" : ""
-              }`}
+              className={`flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-card ${idx === 1 ? "ring-2 ring-brand-600" : ""
+                }`}
             >
               <div className="mb-4 space-y-1">
                 <p className="text-sm font-semibold text-brand-600">{plan.name}</p>
@@ -321,17 +352,16 @@ const openTasks = await sdk
                   <button
                     onClick={() => startCheckout(plan.name as "Personal" | "Basic" | "Professional")}
                     disabled={loadingPlan === plan.name}
-                    className={`mt-auto inline-flex w-full items-center justify-center rounded-lg px-4 py-2 text-sm font-semibold transition ${
-                      idx === 1
+                    className={`mt-auto inline-flex w-full items-center justify-center rounded-lg px-4 py-2 text-sm font-semibold transition ${idx === 1
                         ? "bg-brand-600 text-white hover:bg-brand-500"
                         : "border border-slate-200 text-slate-900 hover:bg-slate-50"
-                    } ${loadingPlan === plan.name ? "opacity-70 cursor-not-allowed" : ""}`}
+                      } ${loadingPlan === plan.name ? "opacity-70 cursor-not-allowed" : ""}`}
                   >
                     {loadingPlan === plan.name
                       ? "Redirecting..."
                       : hasPlan
-                      ? "Upgrade"
-                      : plan.cta}
+                        ? "Upgrade"
+                        : plan.cta}
                   </button>
                 );
               })()}
@@ -412,7 +442,7 @@ const openTasks = await sdk
           </ol>
 
           <pre className="overflow-auto rounded-xl bg-slate-900 p-4 text-sm text-slate-50 shadow-inner">
-npm install instantbackend-sdk
+            npm install instantbackend-sdk
           </pre>
 
           <div className="space-y-2">
@@ -421,7 +451,7 @@ npm install instantbackend-sdk
               initialize the SDK in your code.
             </p>
             <pre className="overflow-auto rounded-xl bg-slate-900 p-4 text-sm text-slate-50 shadow-inner">
-{`import InstantBackend from 'instantbackend-sdk';
+              {`import InstantBackend from 'instantbackend-sdk';
 
 const backend = new InstantBackend('your-api-key');`}
             </pre>
@@ -430,13 +460,13 @@ const backend = new InstantBackend('your-api-key');`}
           <div className="space-y-2">
             <p className="text-slate-800 font-semibold">5. Login and start building!</p>
             <pre className="overflow-auto rounded-xl bg-slate-900 p-4 text-sm text-slate-50 shadow-inner">
-{`await backend.login('your-username', 'your-password');`}
+              {`await backend.login('your-username', 'your-password');`}
             </pre>
           </div>
 
           <p className="text-slate-700">
             For more details, check the{" "}
-              <a href="/docs" className="text-brand-600 underline">
+            <a href="/docs" className="text-brand-600 underline">
               SDK Usage Examples
             </a>
             .
