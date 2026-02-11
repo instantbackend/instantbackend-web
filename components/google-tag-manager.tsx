@@ -1,11 +1,13 @@
 "use client";
 
 import Script from "next/script";
+import { useCookieConsent } from "@/contexts/cookie-consent-context";
 
 export function GoogleTagManager() {
     const gtmId = process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID;
+    const { consent } = useCookieConsent();
 
-    if (!gtmId) return null;
+    if (!gtmId || !consent.analytics) return null;
 
     return (
         <Script id="google-tag-manager" strategy="afterInteractive">
@@ -22,8 +24,9 @@ export function GoogleTagManager() {
 
 export function GoogleTagManagerNoscript() {
     const gtmId = process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID;
+    const { consent } = useCookieConsent();
 
-    if (!gtmId) return null;
+    if (!gtmId || !consent.analytics) return null;
 
     return (
         <noscript>
