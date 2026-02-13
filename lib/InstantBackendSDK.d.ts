@@ -23,6 +23,16 @@ export interface LoginResponse {
   [key: string]: any;
 }
 
+export interface PasswordResetRequestParams {
+  email?: string;
+  username?: string;
+}
+
+export interface PasswordResetParams {
+  token: string;
+  password: string;
+}
+
 export interface PaymentIntentParams {
   amount: number;
   currency?: string;
@@ -101,6 +111,8 @@ export class InstantBackend {
   register(params: RegisterParams): Promise<RegisterResponse>;
   collection(collection: string): Collection;
   login(username: string, password: string): Promise<LoginResponse>;
+  requestPasswordReset(params: PasswordResetRequestParams): Promise<any>;
+  resetPassword(params: PasswordResetParams): Promise<any>;
   createPaymentIntent(amount: number, currency?: string, description?: string): Promise<PaymentIntentResponse>;
   createSubscription(priceId: string, customerId: string): Promise<SubscriptionResponse>;
   getSubscriptionStatus(): Promise<any>;
@@ -110,4 +122,3 @@ export class InstantBackend {
   getSubscription(): Promise<any>;
   cancelSubscription(): Promise<any>;
 }
-

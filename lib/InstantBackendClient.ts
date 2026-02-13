@@ -55,6 +55,30 @@ export async function registerUser({
   return result;
 }
 
+export async function requestPasswordReset({
+  email,
+  username,
+}: {
+  email?: string;
+  username?: string;
+}) {
+  const client = instantiateWithToken(null);
+  const result = await client.requestPasswordReset({ email, username });
+  return result;
+}
+
+export async function resetPassword({
+  token,
+  password,
+}: {
+  token: string;
+  password: string;
+}) {
+  const client = instantiateWithToken(null);
+  const result = await client.resetPassword({ token, password });
+  return result;
+}
+
 export async function getCollections(client: InstantBackend): Promise<CollectionSummary[]> {
   try {
     const result = await client.collection("collections").get();
@@ -191,4 +215,3 @@ export async function getUsage(client: InstantBackend): Promise<UsageInfo> {
     period: null,
   };
 }
-

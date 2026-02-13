@@ -17,6 +17,12 @@ import { useInstantBackend } from "@/contexts/instant-backend-context";
 import { useRequireAuth } from "@/hooks/useRequireAuth";
 import { useQuery } from "@tanstack/react-query";
 
+const COLLECTION_LIMITS = {
+  Personal: 3,
+  Basic: 20,
+  Professional: 100,
+} as const;
+
 export default function DashboardPage() {
   useRequireAuth();
   const { bf, logout, apiKey: apiKeyFromToken, subscriptionStatus } = useInstantBackend();
@@ -117,10 +123,20 @@ export default function DashboardPage() {
     return Math.min(100, Math.round((usage.used / effectiveLimit) * 100));
   }, [usage, effectiveLimit]);
 
+  const collectionLimit = useMemo(() => {
+    return currentPlan ? COLLECTION_LIMITS[currentPlan] : COLLECTION_LIMITS.Personal;
+  }, [currentPlan]);
+
   const storagePercent = useMemo(() => {
     if (!usage?.storageBytes || !effectiveStorageLimitBytes) return 0;
     return Math.min(100, Math.round((usage.storageBytes / effectiveStorageLimitBytes) * 100));
   }, [usage, effectiveStorageLimitBytes]);
+
+  const collectionPercent = useMemo(() => {
+    if (!collectionLimit) return 0;
+    const count = collections?.length ?? 0;
+    return Math.min(100, Math.round((count / collectionLimit) * 100));
+  }, [collections, collectionLimit]);
 
   const formatStorage = (bytes: number | null | undefined) => {
     if (bytes === null || bytes === undefined) return "N/A";
@@ -380,6 +396,15 @@ export default function DashboardPage() {
             {!loadingUsage && usage && (
               <>
                 <div className="flex justify-between text-sm text-slate-700">
+                  <span>Collections</span>
+                  <span>
+                    {loadingCollections
+                      ? "Loading..."
+                      : `${collections?.length ?? 0} / ${collectionLimit}`}
+                  </span>
+                </div>
+                <Progress value={collectionPercent} />
+                <div className="flex justify-between text-sm text-slate-700">
                   <span>Requests</span>
                   <span>
                     {usage.used} / {effectiveLimit || usage.limit || "N/A"}
@@ -486,4 +511,3 @@ export default function DashboardPage() {
     </div>
   );
 }
-
