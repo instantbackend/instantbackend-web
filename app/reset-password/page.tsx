@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { resetPassword } from "@/lib/InstantBackendClient";
+import { validatePassword, getPasswordChecks } from "@/lib/passwordValidation";
 
 export default function ResetPasswordPage() {
   const searchParams = useSearchParams();
@@ -16,6 +17,8 @@ export default function ResetPasswordPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const passwordValidation = validatePassword(password);
+  const passwordChecks = getPasswordChecks(password);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -24,6 +27,11 @@ export default function ResetPasswordPage() {
 
     if (!token) {
       setError("Missing reset token. Please request a new password reset link.");
+      return;
+    }
+
+    if (!passwordValidation.valid) {
+      setError(`Password does not meet security requirements: ${passwordValidation.errors.join(" ")}`);
       return;
     }
 
@@ -69,6 +77,20 @@ export default function ResetPasswordPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
+              <div className="rounded-md border border-slate-200 bg-slate-50 px-3 py-2">
+                <p className="text-xs font-semibold text-slate-700">Password requirements</p>
+                <ul className="mt-2 list-disc pl-4 text-xs text-slate-600">
+                  {passwordChecks.map((check) => (
+                    <li
+                      key={check.label}
+                      className={check.passed ? "text-emerald-700" : "text-slate-600"}
+                    >
+                      <span className="font-mono">{check.passed ? "[x]" : "[ ]"}</span>{" "}
+                      {check.label}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
             <div className="space-y-2">
               <Label htmlFor="confirmPassword">Confirm new password</Label>

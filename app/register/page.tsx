@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { registerUser, login } from "@/lib/InstantBackendClient";
+import { validatePassword, getPasswordChecks } from "@/lib/passwordValidation";
 import { useInstantBackend } from "@/contexts/instant-backend-context";
 
 function RegisterForm() {
@@ -22,6 +23,8 @@ function RegisterForm() {
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const passwordValidation = validatePassword(password);
+  const passwordChecks = getPasswordChecks(password);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -40,6 +43,11 @@ function RegisterForm() {
 
     if (password !== confirmPassword) {
       setError("Passwords do not match");
+      return;
+    }
+
+    if (!passwordValidation.valid) {
+      setError(`Password does not meet security requirements: ${passwordValidation.errors.join(" ")}`);
       return;
     }
 
@@ -97,6 +105,20 @@ function RegisterForm() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
+              <div className="rounded-md border border-slate-200 bg-slate-50 px-3 py-2">
+                <p className="text-xs font-semibold text-slate-700">Password requirements</p>
+                <ul className="mt-2 list-disc pl-4 text-xs text-slate-600">
+                  {passwordChecks.map((check) => (
+                    <li
+                      key={check.label}
+                      className={check.passed ? "text-emerald-700" : "text-slate-600"}
+                    >
+                      <span className="font-mono">{check.passed ? "[x]" : "[ ]"}</span>{" "}
+                      {check.label}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
 
             <div className="space-y-2">
@@ -191,4 +213,3 @@ export default function RegisterPage() {
     </Suspense>
   );
 }
-
