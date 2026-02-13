@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { resetPassword } from "@/lib/InstantBackendClient";
 import { validatePassword, getPasswordChecks } from "@/lib/passwordValidation";
 
-export default function ResetPasswordPage() {
+function ResetPasswordForm() {
   const searchParams = useSearchParams();
   const token = searchParams.get("token") || "";
   const [password, setPassword] = useState("");
@@ -128,5 +128,28 @@ export default function ResetPasswordPage() {
         </CardContent>
       </Card>
     </div>
+  );
+}
+
+export default function ResetPasswordPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex flex-col items-center gap-8">
+          <div className="text-center">
+            <h1 className="text-3xl font-bold text-slate-900">Set a new password</h1>
+            <p className="text-slate-600">Choose a new password for your account.</p>
+          </div>
+
+          <Card className="w-full max-w-md">
+            <CardContent className="pt-6">
+              <p className="text-slate-600 text-center">Loading...</p>
+            </CardContent>
+          </Card>
+        </div>
+      }
+    >
+      <ResetPasswordForm />
+    </Suspense>
   );
 }
