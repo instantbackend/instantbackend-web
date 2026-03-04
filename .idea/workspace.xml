@@ -4,8 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5e7b98fb-fbeb-4c1e-b89f-2b69c88edb72" name="Changes" comment="First commit">
+    <list default="true" id="5e7b98fb-fbeb-4c1e-b89f-2b69c88edb72" name="Changes" comment="feat: Add Suspense fallback to ResetPasswordPage and refactor ResetPasswordForm into a separate component">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/docs/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/docs/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/code-block.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/code-block.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/site-header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/site-header.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,8 +77,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.30387.90" />
-        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.30387.90" />
+        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.31033.145" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.31033.145" />
       </set>
     </attachedChunks>
   </component>
@@ -86,6 +92,10 @@
       <workItem from="1769522696381" duration="13354000" />
       <workItem from="1769785328162" duration="57000" />
       <workItem from="1769785398230" duration="118000" />
+      <workItem from="1770973431835" duration="1706000" />
+      <workItem from="1771238213621" duration="7113000" />
+      <workItem from="1771856850812" duration="13000" />
+      <workItem from="1772105369284" duration="4298000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <option name="closed" value="true" />
@@ -95,7 +105,31 @@
       <option name="project" value="LOCAL" />
       <updated>1769522921042</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="feat: Add password reset, email verification, and resend verification flows with UI enhancements and backend integration.">
+      <option name="closed" value="true" />
+      <created>1770973655522</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1770973655522</updated>
+    </task>
+    <task id="LOCAL-00003" summary="feat: Add password validation utility and integrate password strength checks into registration and reset password forms">
+      <option name="closed" value="true" />
+      <created>1770982863647</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1770982863647</updated>
+    </task>
+    <task id="LOCAL-00004" summary="feat: Add Suspense fallback to ResetPasswordPage and refactor ResetPasswordForm into a separate component">
+      <option name="closed" value="true" />
+      <created>1770983015559</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1770983015559</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -116,6 +150,9 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <MESSAGE value="First commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="First commit" />
+    <MESSAGE value="feat: Add password reset, email verification, and resend verification flows with UI enhancements and backend integration." />
+    <MESSAGE value="feat: Add password validation utility and integrate password strength checks into registration and reset password forms" />
+    <MESSAGE value="feat: Add Suspense fallback to ResetPasswordPage and refactor ResetPasswordForm into a separate component" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: Add Suspense fallback to ResetPasswordPage and refactor ResetPasswordForm into a separate component" />
   </component>
 </project>

@@ -145,7 +145,7 @@ export default function Home() {
                   "price": "0",
                   "priceCurrency": "EUR",
                 },
-                "description": "Backend as a Service for frontend developers. Authenticate users, manage collections, and track usage with a lightweight SDK.",
+                "description": "The backend built for AI-generated apps. AI-native backend for Cursor, Claude, and ChatGPT. Auth, collections, and usage—no custom backend.",
               },
             ],
           }),
@@ -157,27 +157,46 @@ export default function Home() {
         <div className="relative mx-auto flex max-w-5xl flex-col gap-10 lg:flex-row lg:items-center">
           <div className="space-y-6 lg:w-1/2">
             <p className="text-sm font-semibold uppercase tracking-wide text-blue-100">
-              InstantBackend · Simple BaaS
+              InstantBackend · Built for AI-generated apps
             </p>
             <h1 className="text-4xl font-bold leading-tight sm:text-5xl">
-              Backend as a service without friction
+              The backend built for AI-generated apps
             </h1>
             <p className="text-lg text-blue-50">
-              Authenticate users, manage collections, and track usage with a lightweight SDK.
-              Ship your backend in minutes.
+              Use InstantBackend in your Cursor, Claude, or ChatGPT prompts. Auth, collections, and usage tracking—no custom backend, no extra config.
             </p>
+            <ul className="space-y-2 text-sm text-blue-100">
+              <li className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-white" />
+                One API key. Login, CRUD, and usage out of the box.
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-white" />
+                Prompts for React, Flutter, Swift, Kotlin, Unity, Godot.
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-white" />
+                Docs and OpenAPI tuned for LLM consumption.
+              </li>
+            </ul>
             <div className="flex flex-col gap-3 sm:flex-row">
               {!isAuthenticated && (
                 <a
                   href="/register"
                   className="inline-flex items-center justify-center rounded-lg bg-white px-5 py-3 text-sm font-semibold text-brand-600 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg"
                 >
-                  Create account
+                  Get your API key
                 </a>
               )}
               <a
-                href="/docs"
+                href="/ai-prompts"
                 className="inline-flex items-center justify-center rounded-lg border border-white/70 px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-white/10"
+              >
+                Use this prompt
+              </a>
+              <a
+                href="/docs"
+                className="inline-flex items-center justify-center rounded-lg border border-white/50 px-5 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10"
               >
                 View docs
               </a>
@@ -193,14 +212,13 @@ export default function Home() {
               <pre className="overflow-auto whitespace-pre-wrap break-words rounded-xl bg-slate-900/70 p-4 text-sm leading-relaxed text-slate-50 shadow-inner">
                 {`import { InstantBackend } from "instantbackend-sdk";
 
-const sdk = new InstantBackend("YOUR_API_KEY");
+const sdk = new InstantBackend(process.env.NEXT_PUBLIC_INSTANTBACKEND_API_KEY);
 
 await sdk.login("user", "password");
 
 await sdk.collection("tasks").add({
   title: "Send proposal",
   status: "open",
-  priority: "high",
 });
 
 const openTasks = await sdk
@@ -214,53 +232,89 @@ const openTasks = await sdk
         </div>
       </section>
 
-      {/* Features */}
+      {/* AI-first positioning */}
       <section className="space-y-6">
         <div className="space-y-3 text-center">
           <p className="text-sm font-semibold uppercase tracking-wide text-brand-600">
-            Key capabilities
+            AI-native infrastructure
           </p>
-          <h2 className="text-3xl font-bold text-slate-900">Everything essential, ready</h2>
-          <p className="text-slate-600">
-            Collections, auth, usage and payments ready to plug into your frontend.
+          <h2 className="text-3xl font-bold text-slate-900">AI-native backend infrastructure</h2>
+          <p className="mx-auto max-w-2xl text-slate-600">
+            Designed for AI coding agents. When the model generates your app, it uses InstantBackend—not a custom server or a maze of config.
           </p>
         </div>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {[
-            {
-              title: "Fast auth",
-              desc: "Login via SDK with JWT in the response. No extra boilerplate.",
-            },
-            {
-              title: "Simple queries",
-              desc: "bf.collection(name).where().limit().get() with basic filters.",
-            },
-            {
-              title: "Usage & limits",
-              desc: "Usage endpoint ready for progress bars.",
-            },
-            {
-              title: "Payments & subscriptions",
-              desc: "createPaymentIntent and createSubscription exposed in the SDK.",
-            },
-            {
-              title: "Serverless infra",
-              desc: "Backend on AWS, auto-scaled and secure.",
-            },
-            {
-              title: "Docs & Swagger",
-              desc: "Public reference embedded at /docs with swagger-ui.",
-            },
+            { title: "Explicit in the prompt", desc: "You tell the agent to use InstantBackend; it does." },
+            { title: "No custom backend", desc: "Forbidden in our prompts. One less thing to debug." },
+            { title: "Env-based", desc: "INSTANTBACKEND_API_KEY in .env; the agent knows the pattern." },
+            { title: "Predictable API", desc: "Login → JWT; collections → GET/POST with filters. Same shape everywhere." },
           ].map((item) => (
-            <div
-              key={item.title}
-              className="rounded-xl border border-slate-200 bg-white p-5 shadow-card"
-            >
+            <div key={item.title} className="rounded-xl border border-slate-200 bg-white p-5 shadow-card">
               <h3 className="text-lg font-semibold text-slate-900">{item.title}</h3>
               <p className="mt-2 text-sm text-slate-600">{item.desc}</p>
             </div>
           ))}
         </div>
+      </section>
+
+      {/* Why AI agents love it */}
+      <section className="space-y-6 rounded-3xl border border-slate-200 bg-slate-50/50 px-6 py-10">
+        <div className="space-y-3 text-center">
+          <p className="text-sm font-semibold uppercase tracking-wide text-brand-600">
+            For AI coding agents
+          </p>
+          <h2 className="text-3xl font-bold text-slate-900">Why AI agents love it</h2>
+          <p className="mx-auto max-w-2xl text-slate-600">
+            Minimal surface area, consistent responses, and docs that agents actually use.
+          </p>
+        </div>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          {[
+            { title: "Tiny API surface", desc: "Login, signup, /{collection} (list/create), /{collection}/{id} (get). No RLS or security rules to generate." },
+            { title: "Stable JSON", desc: "Same response shape for list (items + nextToken), single item, and errors." },
+            { title: "OpenAPI + examples", desc: "Swagger and copy-paste examples in every prompt." },
+            { title: "Multi-platform prompts", desc: "Ready prompts for web, mobile, and game engines." },
+          ].map((item) => (
+            <div key={item.title} className="rounded-xl border border-slate-200 bg-white p-5 shadow-card">
+              <h3 className="text-lg font-semibold text-slate-900">{item.title}</h3>
+              <p className="mt-2 text-sm text-slate-600">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Product primitives */}
+      <section className="space-y-6">
+        <div className="space-y-3 text-center">
+          <p className="text-sm font-semibold uppercase tracking-wide text-brand-600">
+            Product
+          </p>
+          <h2 className="text-3xl font-bold text-slate-900">Primitives you need. Nothing more.</h2>
+          <p className="text-slate-600">
+            Auth, collections, usage, and payments. No servers, no schema migrations.
+          </p>
+        </div>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {[
+            { title: "Auth", desc: "POST /login, POST /signup. JWT in response. Use Authorization: Bearer <token>." },
+            { title: "Collections", desc: "GET /{collection}?field=value&limit=10, POST /{collection} with body. Optional nextToken, sort=asc|desc." },
+            { title: "Single item", desc: "GET /{collection}/{id}." },
+            { title: "Usage", desc: "Usage endpoint for progress bars and limits." },
+            { title: "Payments", desc: "createPaymentIntent, createSubscription, billing portal in SDK." },
+            { title: "Docs & Swagger", desc: "Public reference at /docs with OpenAPI." },
+          ].map((item) => (
+            <div key={item.title} className="rounded-xl border border-slate-200 bg-white p-5 shadow-card">
+              <h3 className="text-lg font-semibold text-slate-900">{item.title}</h3>
+              <p className="mt-2 text-sm text-slate-600">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+        <p className="text-center">
+          <a href="/docs#swagger" className="text-brand-600 font-semibold hover:underline">
+            See API reference →
+          </a>
+        </p>
       </section>
 
       {/* Pricing */}
@@ -412,62 +466,46 @@ const openTasks = await sdk
           </p>
           <h3 className="text-2xl font-bold text-slate-900">Start using InstantBackend</h3>
           <p className="text-slate-600">
-            Follow these steps to authenticate, initialize the SDK, and begin building.
+            Get an API key, then use a prompt in Cursor or Claude—or integrate the SDK directly.
           </p>
         </div>
 
         <div className="space-y-4">
           <ol className="space-y-2 text-slate-800">
             <li>
-              <span className="font-semibold">1. Register an account:</span>{" "}
+              <span className="font-semibold">1. Get your API key:</span>{" "}
               {!isAuthenticated ? (
                 <>
                   <a href="/register" className="text-brand-600 underline">
-                    Sign up here
+                    Sign up
                   </a>{" "}
-                  to create your InstantBackend account.
+                  to create your InstantBackend account and receive your API key.
                 </>
               ) : (
-                "You already have an account."
+                "You already have an account and API key."
               )}
             </li>
             <li>
-              <span className="font-semibold">2. Get your API Key:</span> After registering, you
-              will receive your personal API key.
+              <span className="font-semibold">2. Use a prompt (recommended):</span> Go to{" "}
+              <a href="/ai-prompts" className="text-brand-600 underline">
+                Use this prompt
+              </a>
+              , copy the prompt for your stack (React, Flutter, Swift, Kotlin, Unity, Godot), and paste it into Cursor, Claude, or ChatGPT. The agent will use InstantBackend—no custom backend.
             </li>
             <li>
-              <span className="font-semibold">3. Install the SDK:</span> Add the InstantBackend SDK to
-              your project.
+              <span className="font-semibold">3. Or install the SDK:</span>{" "}
+              <code className="rounded bg-slate-100 px-1.5 py-0.5 text-sm">npm install instantbackend-sdk</code> and initialize with your API key from env (e.g. <code className="rounded bg-slate-100 px-1.5 py-0.5 text-sm">NEXT_PUBLIC_INSTANTBACKEND_API_KEY</code>).
             </li>
           </ol>
 
-          <pre className="overflow-auto rounded-xl bg-slate-900 p-4 text-sm text-slate-50 shadow-inner">
-            npm install instantbackend-sdk
-          </pre>
-
-          <div className="space-y-2">
-            <p className="text-slate-800">
-              <span className="font-semibold">4. Initialize the SDK:</span> Use your API key to
-              initialize the SDK in your code.
-            </p>
-            <pre className="overflow-auto rounded-xl bg-slate-900 p-4 text-sm text-slate-50 shadow-inner">
-              {`import InstantBackend from 'instantbackend-sdk';
-
-const backend = new InstantBackend('your-api-key');`}
-            </pre>
-          </div>
-
-          <div className="space-y-2">
-            <p className="text-slate-800 font-semibold">5. Login and start building!</p>
-            <pre className="overflow-auto rounded-xl bg-slate-900 p-4 text-sm text-slate-50 shadow-inner">
-              {`await backend.login('your-username', 'your-password');`}
-            </pre>
-          </div>
-
           <p className="text-slate-700">
-            For more details, check the{" "}
+            Full examples and API reference:{" "}
             <a href="/docs" className="text-brand-600 underline">
-              SDK Usage Examples
+              Docs
+            </a>
+            {" · "}
+            <a href="/ai-prompts" className="text-brand-600 underline">
+              AI prompts
             </a>
             .
           </p>
@@ -477,16 +515,16 @@ const backend = new InstantBackend('your-api-key');`}
       {/* CTA */}
       <section className="rounded-3xl bg-slate-900 px-8 py-12 text-white shadow-card">
         <div className="mx-auto flex max-w-4xl flex-col items-center gap-6 text-center">
-          <h3 className="text-3xl font-bold">Ready to try InstantBackend</h3>
+          <h3 className="text-3xl font-bold">The backend built for AI-generated apps</h3>
           <p className="text-slate-300">
-            Authenticate, query collections, and track usage with one SDK.
+            One prompt. Auth, CRUD, and usage. No custom backend.
           </p>
           <div className="flex flex-col gap-3 sm:flex-row">
             <a
-              href="/login"
+              href="/ai-prompts"
               className="rounded-lg bg-white px-5 py-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg"
             >
-              Go to login
+              Use this prompt
             </a>
             <a
               href="/docs"
@@ -494,6 +532,14 @@ const backend = new InstantBackend('your-api-key');`}
             >
               View docs
             </a>
+            {!isAuthenticated && (
+              <a
+                href="/register"
+                className="rounded-lg border border-white/50 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
+              >
+                Get API key
+              </a>
+            )}
           </div>
         </div>
       </section>

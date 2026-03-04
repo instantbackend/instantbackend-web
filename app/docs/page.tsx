@@ -59,8 +59,8 @@ export default function DocsPage() {
                 Unity
               </a>
             </div>
-            <a href="#ai-prompts" className="hover:text-slate-900">
-              AI prompts
+            <a href="/ai-prompts" className="hover:text-slate-900">
+              Use this prompt
             </a>
             <a href="#swagger" className="hover:text-slate-900">
               Swagger
@@ -75,11 +75,17 @@ export default function DocsPage() {
           </p>
           <h1 className="text-4xl font-bold text-slate-900">Public documentation</h1>
           <p className="max-w-3xl text-lg text-slate-600">
-            InstantBackend is a simple BaaS: authenticate, create collections, and query data
-            with a lightweight SDK. Here are quick examples and the embedded swagger.
+            InstantBackend is the backend built for AI-generated apps. Authenticate, create collections, and query data with a lightweight SDK or REST API. Designed for use with Cursor, Claude, and ChatGPT.
           </p>
           <p className="text-sm text-slate-600">
-            Find more examples on GitHub:{" "}
+            <strong>Using an AI coding agent?</strong> Start with a ready-made prompt:{" "}
+            <a href="/ai-prompts" className="text-brand-600 underline">
+              Use this prompt
+            </a>
+            . Then get your API key and set <code className="rounded bg-slate-100 px-1">INSTANTBACKEND_API_KEY</code> (or <code className="rounded bg-slate-100 px-1">NEXT_PUBLIC_INSTANTBACKEND_API_KEY</code> for web).
+          </p>
+          <p className="text-sm text-slate-600">
+            More examples on GitHub:{" "}
             <a
               href="https://github.com/instantbackend/instantbackend-examples"
               className="text-brand-600 underline"
@@ -420,32 +426,24 @@ public class InstantBackendExample : MonoBehaviour
           <div>
             <h2 className="text-2xl font-semibold text-slate-900">AI prompts</h2>
             <p className="text-slate-600">
-              Use these prompts to generate apps that integrate InstantBackend quickly.
+              Production-ready prompts for React, Flutter, Swift, Kotlin, Unity, and Godot. Each prompt instructs the AI to use only InstantBackend (no custom backend).
+            </p>
+            <p className="mt-2">
+              <a href="/ai-prompts" className="font-medium text-brand-600 underline">
+                Open prompt library →
+              </a>
             </p>
           </div>
           <div className="space-y-2">
-            <p className="text-sm font-semibold text-slate-800">App generator prompt</p>
+            <p className="text-sm font-semibold text-slate-800">Quick web app prompt (Node / JS)</p>
             <CodeBlock
               className="shadow-inner"
-              code={`You are a senior full-stack engineer. Build a small web app
-that uses the InstantBackend SDK.
-Note the SDK is available at:
-- https://www.npmjs.com/package/instantbackend-sdk
-Docs:
-- https://www.instantbackend.dev/docs
-
-Requirements:
-- Use instantbackend-sdk for auth and data access.
-- Implement login, create, and list flows.
-- Use a collection named "tasks".
-- After login, create a task and then fetch tasks filtered by status.
-- Include clear UI states (loading, error, empty, success).
-- Keep the code minimal and production-ready.
-
-Provide:
-- Folder structure
-- Key files with code
-- How to run locally`}
+              code={`You are a senior full-stack engineer. Build a small web app that uses the InstantBackend SDK.
+- SDK: https://www.npmjs.com/package/instantbackend-sdk
+- Docs: https://instantbackend.dev/docs
+- You MUST use InstantBackend as the only backend. Do NOT create a custom backend.
+- Use env var NEXT_PUBLIC_INSTANTBACKEND_API_KEY for the API key.
+- Implement login, create, and list (e.g. collection "tasks"). Include loading, error, and empty states.`}
             />
           </div>
         </section>

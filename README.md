@@ -1,8 +1,8 @@
 # InstantBackend Web
 
-The official landing page and dashboard for **InstantBackend**, a Backend-as-a-Service (BaaS) designed to help developers ship their apps in minutes.
+The official landing page and dashboard for **InstantBackend** — the backend built for AI-generated apps.
 
-This project is a [Next.js](https://nextjs.org/) application that serves as the marketing site, documentation hub, and user dashboard for managing InstantBackend projects.
+InstantBackend is AI-native backend infrastructure designed for AI coding agents (Cursor, Claude, Codex, ChatGPT). One prompt per stack; no custom backend. This [Next.js](https://nextjs.org/) app is the marketing site, prompt library (`/ai-prompts`), documentation hub, blog, and user dashboard for managing InstantBackend projects.
 
 ## Features
 

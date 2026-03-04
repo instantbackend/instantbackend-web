@@ -7,33 +7,33 @@ import { SiteHeader } from "@/components/site-header";
 export const metadata: Metadata = {
   metadataBase: new URL("https://instantbackend.dev"),
   title: {
-    default: "InstantBackend - Backend as a Service for Frontend Developers",
+    default: "InstantBackend - The backend built for AI-generated apps",
     template: "%s | InstantBackend"
   },
-  description: "Ship your app in minutes with InstantBackend. The simplest BaaS with authentication, database, and usage tracking in a single lightweight SDK.",
-  keywords: ["BaaS", "Backend as a Service", "InstantBackend", "NoSQL", "API", "SDK", "Serverless", "Database", "Authentication"],
+  description: "The backend built for AI-generated apps. Use InstantBackend in Cursor, Claude, or ChatGPT. Auth, collections, usage—no custom backend. One prompt, full backend.",
+  keywords: ["backend for AI apps", "backend for Cursor", "backend for Claude", "AI-generated app backend", "BaaS for LLM", "InstantBackend", "Cursor backend", "Claude backend", "ChatGPT backend", "no custom backend", "API", "SDK"],
   authors: [{ name: "InstantBackend Team" }],
   creator: "InstantBackend",
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://instantbackend.dev",
-    title: "InstantBackend - Backend as a Service without friction",
-    description: "Authenticate users, manage collections, and track usage with a lightweight SDK. Ship your backend in minutes.",
+    title: "InstantBackend - The backend built for AI-generated apps",
+    description: "Use InstantBackend in Cursor, Claude, or ChatGPT. Auth, collections, usage—no custom backend. One prompt, full backend.",
     siteName: "InstantBackend",
     images: [
       {
-        url: "/img/og-image.png", // Ensure this image exists or use a placeholder
+        url: "/img/og-image.png",
         width: 1200,
         height: 630,
-        alt: "InstantBackend - Simple BaaS for Developers",
+        alt: "InstantBackend - Backend built for AI-generated apps",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "InstantBackend - Backend as a Service without friction",
-    description: "Authenticate users, manage collections, and track usage with a lightweight SDK. Ship your backend in minutes.",
+    title: "InstantBackend - The backend built for AI-generated apps",
+    description: "Use InstantBackend in Cursor, Claude, or ChatGPT. Auth, collections, usage—no custom backend.",
     images: ["/img/og-image.png"],
     creator: "@instantbackend",
   },

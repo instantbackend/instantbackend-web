@@ -106,8 +106,14 @@ export function SiteHeader({ className }: SiteHeaderProps) {
           </span>
         </Link>
         <nav className="flex items-center gap-4 text-sm font-medium text-slate-700">
+          <Link href="/ai-prompts" className="hover:text-slate-900">
+            Use this prompt
+          </Link>
           <Link href="/docs" className="hover:text-slate-900">
             Docs
+          </Link>
+          <Link href="/blog" className="hover:text-slate-900">
+            Blog
           </Link>
           {!isAuthenticated && (
             <>
