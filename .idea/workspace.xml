@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5e7b98fb-fbeb-4c1e-b89f-2b69c88edb72" name="Changes" comment="feat: Revamp site positioning for AI-generated apps, enhance prompt support, and improve metadata for SEO optimization." />
+    <list default="true" id="5e7b98fb-fbeb-4c1e-b89f-2b69c88edb72" name="Changes" comment="feat: Add blog fetching logic, Markdown rendering, and dynamic content support with Tailwind Typography integration" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -92,7 +92,7 @@
       <workItem from="1770973431835" duration="1706000" />
       <workItem from="1771238213621" duration="7113000" />
       <workItem from="1771856850812" duration="13000" />
-      <workItem from="1772105369284" duration="4429000" />
+      <workItem from="1772105369284" duration="5104000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <option name="closed" value="true" />
@@ -134,7 +134,15 @@
       <option name="project" value="LOCAL" />
       <updated>1772613933134</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="feat: Add blog fetching logic, Markdown rendering, and dynamic content support with Tailwind Typography integration">
+      <option name="closed" value="true" />
+      <created>1772616664195</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1772616664195</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -159,6 +167,7 @@
     <MESSAGE value="feat: Add password validation utility and integrate password strength checks into registration and reset password forms" />
     <MESSAGE value="feat: Add Suspense fallback to ResetPasswordPage and refactor ResetPasswordForm into a separate component" />
     <MESSAGE value="feat: Revamp site positioning for AI-generated apps, enhance prompt support, and improve metadata for SEO optimization." />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: Revamp site positioning for AI-generated apps, enhance prompt support, and improve metadata for SEO optimization." />
+    <MESSAGE value="feat: Add blog fetching logic, Markdown rendering, and dynamic content support with Tailwind Typography integration" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: Add blog fetching logic, Markdown rendering, and dynamic content support with Tailwind Typography integration" />
   </component>
 </project>
