@@ -13,6 +13,7 @@ interface SiteHeaderProps {
 export function SiteHeader({ className }: SiteHeaderProps) {
   const { isAuthenticated, username, logout, subscriptionStatus, bf } = useInstantBackend();
   const [open, setOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [loadingPortal, setLoadingPortal] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
 
@@ -61,6 +62,8 @@ export function SiteHeader({ className }: SiteHeaderProps) {
     return () => document.removeEventListener("mousedown", onClickOutside);
   }, []);
 
+  const closeMobileMenu = () => setMobileMenuOpen(false);
+
   const handleLogout = () => {
     setOpen(false);
     logout();
@@ -91,8 +94,8 @@ export function SiteHeader({ className }: SiteHeaderProps) {
         className
       )}
     >
-      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
-        <Link href="/" className="flex items-center gap-2 font-bold">
+      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-4">
+        <Link href="/" className="flex shrink-0 items-center gap-2 font-bold">
           <Image
             src="/img/logo.png"
             alt="InstantBackend"
@@ -101,11 +104,13 @@ export function SiteHeader({ className }: SiteHeaderProps) {
             className="h-7 w-auto"
             priority
           />
-          <span className="bg-gradient-to-br from-brand-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
+          <span className="hidden bg-gradient-to-br from-brand-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent sm:inline">
             InstantBackend
           </span>
         </Link>
-        <nav className="flex items-center gap-4 text-sm font-medium text-slate-700">
+
+        {/* Desktop nav: visible from md */}
+        <nav className="hidden items-center gap-4 text-sm font-medium text-slate-700 md:flex">
           <Link href="/ai-prompts" className="hover:text-slate-900">
             Use this prompt
           </Link>
@@ -177,7 +182,77 @@ export function SiteHeader({ className }: SiteHeaderProps) {
             </div>
           )}
         </nav>
+
+        {/* Mobile: hamburger */}
+        <div className="flex items-center md:hidden">
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen((prev) => !prev)}
+            className="rounded-md p-2 text-slate-600 hover:bg-slate-100 hover:text-slate-900 focus:outline-none"
+            aria-expanded={mobileMenuOpen}
+            aria-label={mobileMenuOpen ? "Cerrar menú" : "Abrir menú"}
+          >
+            {mobileMenuOpen ? (
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            ) : (
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            )}
+          </button>
+        </div>
       </div>
+
+      {/* Mobile menu panel */}
+      {mobileMenuOpen && (
+        <div className="border-t border-slate-200 bg-white md:hidden">
+          <nav className="flex flex-col px-4 py-3 text-sm font-medium text-slate-700">
+            <Link href="/ai-prompts" className="rounded-md px-3 py-2 hover:bg-slate-50 hover:text-slate-900" onClick={closeMobileMenu}>
+              Use this prompt
+            </Link>
+            <Link href="/docs" className="rounded-md px-3 py-2 hover:bg-slate-50 hover:text-slate-900" onClick={closeMobileMenu}>
+              Docs
+            </Link>
+            <Link href="/blog" className="rounded-md px-3 py-2 hover:bg-slate-50 hover:text-slate-900" onClick={closeMobileMenu}>
+              Blog
+            </Link>
+            {!isAuthenticated && (
+              <>
+                <Link href="/register" className="rounded-md px-3 py-2 hover:bg-slate-50 hover:text-slate-900" onClick={closeMobileMenu}>
+                  Register
+                </Link>
+                <Link href="/login" className="rounded-md px-3 py-2 hover:bg-slate-50 hover:text-slate-900" onClick={closeMobileMenu}>
+                  Login
+                </Link>
+              </>
+            )}
+            {isAuthenticated && (
+              <>
+                <Link href="/app" className="rounded-md px-3 py-2 hover:bg-slate-50 hover:text-slate-900" onClick={closeMobileMenu}>
+                  Dashboard
+                </Link>
+                {hasPaidPlan && (
+                  <button
+                    onClick={() => { handleManageSubscription(); closeMobileMenu(); }}
+                    disabled={loadingPortal}
+                    className="rounded-md px-3 py-2 text-left hover:bg-slate-50 disabled:opacity-50"
+                  >
+                    {loadingPortal ? "Loading..." : "Manage subscription"}
+                  </button>
+                )}
+                <button
+                  onClick={() => { handleLogout(); closeMobileMenu(); }}
+                  className="rounded-md px-3 py-2 text-left hover:bg-slate-50"
+                >
+                  Logout
+                </button>
+              </>
+            )}
+          </nav>
+        </div>
+      )}
     </header>
   );
 }
