@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { login } from "@/lib/InstantBackendClient";
 import { useInstantBackend } from "@/contexts/instant-backend-context";
+import { trackEvent } from "@/lib/analytics";
 
 function LoginForm() {
   const router = useRouter();
@@ -40,7 +41,17 @@ function LoginForm() {
       if (!token) throw new Error("JWT token was not received");
       setAuth(token, client);
       const plan = searchParams.get("plan");
+      trackEvent("login_success", {
+        method: "instantbackend",
+        has_plan: Boolean(plan),
+        plan: plan ?? null,
+      });
+
       if (plan) {
+        trackEvent("begin_checkout", {
+          plan,
+          source: "login",
+        });
         await router.push(`/checkout/start?plan=${encodeURIComponent(plan)}`);
       } else {
         await router.push("/app");

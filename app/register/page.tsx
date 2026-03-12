@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { registerUser, login } from "@/lib/InstantBackendClient";
 import { validatePassword, getPasswordChecks } from "@/lib/passwordValidation";
 import { useInstantBackend } from "@/contexts/instant-backend-context";
+import { trackEvent } from "@/lib/analytics";
 
 function RegisterForm() {
   const router = useRouter();
@@ -59,7 +60,17 @@ function RegisterForm() {
       if (!token) throw new Error("JWT token was not received after registration");
       setAuth(token, client);
       const plan = searchParams.get("plan");
+      trackEvent("signup_success", {
+        method: "instantbackend",
+        has_plan: Boolean(plan),
+        plan: plan ?? null,
+      });
+
       if (plan) {
+        trackEvent("begin_checkout", {
+          plan,
+          source: "register",
+        });
         await router.push(`/checkout/start?plan=${encodeURIComponent(plan)}`);
       } else {
         await router.push("/app");

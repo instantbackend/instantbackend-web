@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useMemo, useState, Suspense } from "react";
+import { useEffect, useMemo, useRef, useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useInstantBackend } from "@/contexts/instant-backend-context";
+import { trackEvent } from "@/lib/analytics";
 
 function CheckoutStartContent() {
   const searchParams = useSearchParams();
@@ -10,6 +11,7 @@ function CheckoutStartContent() {
   const { isAuthenticated, jwtToken, bf } = useInstantBackend();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const hasTrackedStart = useRef(false);
 
   const plan = useMemo(() => {
     const p = searchParams.get("plan");
@@ -47,6 +49,14 @@ function CheckoutStartContent() {
       return;
     }
 
+    if (!hasTrackedStart.current) {
+      trackEvent("begin_checkout", {
+        plan,
+        source: "checkout_start",
+      });
+      hasTrackedStart.current = true;
+    }
+
     const run = async () => {
       setLoading(true);
       setError(null);
@@ -57,11 +67,18 @@ function CheckoutStartContent() {
           cancelUrl,
         });
         if (data?.url) {
+          trackEvent("checkout_redirect", {
+            plan,
+          });
           window.location.href = data.url as string;
         } else {
           throw new Error("Checkout URL not returned.");
         }
       } catch (err: any) {
+        trackEvent("checkout_error", {
+          plan,
+          message: err?.message ?? "Could not start checkout",
+        });
         setError(err?.message ?? "Could not start checkout");
       } finally {
         setLoading(false);
@@ -109,4 +126,3 @@ export default function CheckoutStart() {
     </Suspense>
   );
 }
-
