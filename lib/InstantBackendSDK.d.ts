@@ -11,6 +11,23 @@ export interface RegisterParams {
   password: string;
   email?: string;
   fullName?: string;
+  customAttributes?: Record<string, unknown>;
+}
+
+export interface AccountUser {
+  id: string;
+  username: string;
+  email?: string;
+  fullName?: string;
+  account: string;
+  role: string;
+  createdAt?: string;
+  emailVerified: boolean;
+  customAttributes: Record<string, unknown>;
+}
+
+export interface AccountUsersResponse {
+  items: AccountUser[];
 }
 
 export interface RegisterResponse {
@@ -109,6 +126,7 @@ export class InstantBackend {
   getAuthHeaders(): Record<string, string>;
 
   register(params: RegisterParams): Promise<RegisterResponse>;
+  listAccountUsers(): Promise<AccountUsersResponse>;
   collection(collection: string): Collection;
   login(username: string, password: string): Promise<LoginResponse>;
   requestPasswordReset(params: PasswordResetRequestParams): Promise<any>;
