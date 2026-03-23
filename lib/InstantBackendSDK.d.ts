@@ -50,6 +50,22 @@ export interface PasswordResetParams {
   password: string;
 }
 
+export interface ChangePasswordParams {
+  currentPassword: string;
+  newPassword: string;
+}
+
+export interface ChangeAccountUserPasswordParams {
+  id: string;
+  password: string;
+}
+
+export interface SuccessResponse {
+  success: boolean;
+  id?: string;
+  [key: string]: any;
+}
+
 export interface PaymentIntentParams {
   amount: number;
   currency?: string;
@@ -105,6 +121,8 @@ export interface DocumentResponse {
 export class Collection {
   constructor(instantBackend: InstantBackend, collection: string);
   add(data: Record<string, any>): Promise<DocumentResponse>;
+  update(id: string, data: Record<string, any>): Promise<DocumentResponse>;
+  delete(id: string): Promise<SuccessResponse>;
   where(field: string, operator: string, value: any): Collection;
   limit(n: number): Collection;
   sort(order: 'asc' | 'desc'): Collection;
@@ -131,6 +149,8 @@ export class InstantBackend {
   login(username: string, password: string): Promise<LoginResponse>;
   requestPasswordReset(params: PasswordResetRequestParams): Promise<any>;
   resetPassword(params: PasswordResetParams): Promise<any>;
+  changePassword(params: ChangePasswordParams): Promise<SuccessResponse>;
+  changeAccountUserPassword(params: ChangeAccountUserPasswordParams): Promise<SuccessResponse>;
   createPaymentIntent(amount: number, currency?: string, description?: string): Promise<PaymentIntentResponse>;
   createSubscription(priceId: string, customerId: string): Promise<SubscriptionResponse>;
   getSubscriptionStatus(): Promise<any>;

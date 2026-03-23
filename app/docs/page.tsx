@@ -117,6 +117,9 @@ const tasks = await sdk
             </div>
             <div id="sdk-node-login" className="min-w-0 scroll-mt-24 space-y-2">
               <p className="text-sm font-semibold text-slate-800">Login + query</p>
+              <p className="text-sm text-slate-600">
+                <code className="rounded bg-slate-100 px-1">update(id, data)</code> replaces or upserts the full document for that ID. It is not a partial merge.
+              </p>
               <ApiKeyCodeBlock
                 className="shadow-inner"
                 code={`const sdk = new InstantBackend("YOUR_API_KEY");
@@ -127,6 +130,14 @@ await sdk.collection("tasks").add({
   status: "open",
   priority: "high",
 });
+
+await sdk.collection("tasks").update("task-123", {
+  title: "Send proposal",
+  status: "done",
+  priority: "high",
+});
+
+await sdk.collection("tasks").delete("task-123");
 
 const openTasks = await sdk
   .collection("tasks")
@@ -466,4 +477,3 @@ public class InstantBackendExample : MonoBehaviour
     </div>
   );
 }
-

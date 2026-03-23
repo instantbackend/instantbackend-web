@@ -83,6 +83,154 @@ paths:
                   message:
                     type: string
                     example: Invalid credentials
+  /forgot-password:
+    post:
+      summary: Request a password reset
+      description: Sends a password reset email if an account exists for the given email or username.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                username:
+                  type: string
+      responses:
+        '200':
+          description: Password reset request accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: If an account exists for that email or username, a password reset link has been sent.
+        '400':
+          description: Email or username is required
+  /reset-password:
+    post:
+      summary: Reset a password with a token
+      description: Resets a user's password using a valid password reset token.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - token
+                - password
+              properties:
+                token:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Password reset successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Password has been reset successfully. You can now sign in.
+        '400':
+          description: Invalid, expired, or missing reset token/password
+  /account/password/change:
+    post:
+      summary: Change the current user's password
+      description: Changes the password of the authenticated user after validating the current password.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - currentPassword
+                - newPassword
+              properties:
+                currentPassword:
+                  type: string
+                newPassword:
+                  type: string
+      responses:
+        '200':
+          description: Password changed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  id:
+                    type: string
+        '400':
+          description: Missing or invalid password data
+        '401':
+          description: Authentication required
+        '403':
+          description: Current password is invalid
+      security:
+        - LambdaTokenAuthorizer: []
+  /account/users/{id}/password:
+    patch:
+      summary: Change an account user's password
+      description: Allows an authenticated admin to change the password of a member in the current account.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - password
+              properties:
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Password changed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  id:
+                    type: string
+        '400':
+          description: Missing or invalid password data
+        '401':
+          description: Authentication required
+        '403':
+          description: Only admins can change member passwords or the target is not a member
+        '404':
+          description: User not found in the current account
+      security:
+        - LambdaTokenAuthorizer: []
   /{collection}:
     get:
       summary: Retrieve items from a collection
@@ -141,7 +289,7 @@ paths:
         - LambdaTokenAuthorizer: [ ]
     post:
       summary: Create or update an item
-      description: Adds or replaces an item in the specified collection
+      description: Creates a new item or fully replaces an existing item when a top-level id is provided. This is replace/upsert behavior, not a partial merge.
       parameters:
         - name: "collection"
           in: "path"
@@ -154,13 +302,11 @@ paths:
           application/json:
             schema:
               type: object
+              additionalProperties: true
               properties:
                 id:
                   type: string
-                  description: Optional unique identifier of the item
-                item:
-                  type: object
-                  additionalProperties: true
+                  description: Optional unique identifier of the item. When provided, the write fully replaces or upserts that item by ID.
       responses:
         '200':
           description: Item created or updated successfully
@@ -199,6 +345,48 @@ paths:
                 additionalProperties: true
       security:
         - LambdaTokenAuthorizer: []
+    delete:
+      summary: Delete a specific item
+      description: Deletes one item by ID from the specified collection.
+      parameters:
+        - name: "collection"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        '200':
+          description: Item deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  id:
+                    type: string
+                  message:
+                    type: string
+                    example: Item deleted correctly.
+        '404':
+          description: Item not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Item not found.
+      security:
+        - LambdaTokenAuthorizer: []
 components:
   securitySchemes:
     LambdaTokenAuthorizer:
@@ -207,5 +395,3 @@ components:
       name: "Authorization"
       in: "header"
       x-amazon-apigateway-authtype: "custom"
-
-
